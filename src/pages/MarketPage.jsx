@@ -1,0 +1,20 @@
+import { useNavigate } from 'react-router-dom'
+import { BarChart3, Box, ChevronRight, Flame, Lightbulb, MapPin, Scale, ShieldCheck, ShoppingCart, Waves } from 'lucide-react'
+import '../styles/service-pages.css'
+
+const chartPoints = '0,104 35,102 70,106 105,98 140,102 175,96 210,100 245,96 280,102 315,91 350,96 385,89 420,68 455,63 490,75 525,80 560,76 595,60 630,71 665,61 700,54 735,72 770,52 805,43 840,56 875,61 910,36 945,44 980,32 1015,39 1050,24 1085,36 1120,30 1155,24'
+const demands = [['3~4kg/尾','需求68吨','12条采购需求','¥152/kg','需求旺盛 ↑'],['4~5kg/尾','需求46吨','8条采购需求','¥158/kg','需求稳定'],['5kg+/尾','需求21吨','4条采购需求','¥166/kg','需求平稳']]
+const cities = [['上海','采购需求38吨','¥153.6/kg','需求活跃 ↑'],['北京','采购需求26吨','¥155.2/kg','需求稳定'],['广州','采购需求22吨','¥151.8/kg','需求平稳'],['深圳','采购需求18吨','¥152.5/kg','需求平稳']]
+
+function RankRows({ rows, orange=false }) { return <div className="market-ranks">{rows.map((r,i)=><div key={r[0]}><b className={orange?'orange':''}>{i+1}</b><strong>{r[0]}</strong><span><ShoppingCart />{r[1]}</span>{r.length===5&&<span><ShoppingCart />{r[2]}</span>}<em>{r[r.length-2]}</em><i className={i===0?'hot':''}>{r[r.length-1]}</i></div>)}</div> }
+
+export default function MarketPage(){ const nav=useNavigate(); return <main className="market-page">
+  <section className="market-heading"><div className="page-container"><p className="service-crumb">首页 <ChevronRight /> 市场行情</p><h1>市场行情中心</h1><span>掌握价格变化，了解市场需求方向</span></div><Waves/></section>
+  <div className="page-container market-board">
+    <section className="market-summary market-card"><header><BarChart3/><h2>今日市场</h2></header><div className="market-summary-values"><div><span>今日均价</span><strong>¥153.2<small>/kg</small></strong><em>↑ 2.1%</em></div><div><span>今日成交量</span><strong className="blue">186.5<small>吨</small></strong></div><div><span>今日采购需求</span><strong className="blue">32<small>条</small></strong></div></div><div className="market-tip"><Lightbulb/><p><b>市场提示：</b>冰鲜3~4kg需求较活跃，上海、北京采购较多。</p><button onClick={()=>nav('/procurement')}>查看采购大厅</button></div></section>
+    <section className="market-chart market-card"><header><BarChart3/><h2>近30日成交价格走势</h2></header><div className="market-controls"><div><button className="active">冰鲜整鱼</button><button>冷冻整鱼</button><button>鱼柳</button></div><div><button>7日</button><button className="active">30日</button><button>90日</button></div></div><div className="market-line-wrap"><span className="y-title">价格（元/kg）</span><div className="market-y"><span>170</span><span>160</span><span>150</span><span>140</span><span>130</span></div><svg viewBox="0 0 1155 135" preserveAspectRatio="none"><defs><linearGradient id="marketArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#1470ff" stopOpacity=".23"/><stop offset="1" stopColor="#1470ff" stopOpacity="0"/></linearGradient></defs><polygon points={`${chartPoints} 1155,135 0,135`} fill="url(#marketArea)"/><polyline points={chartPoints}/><circle cx="1155" cy="24" r="5"/></svg><div className="market-x"><span>05-20</span><span>05-24</span><span>05-28</span><span>06-01</span><span>06-05</span><span>06-08</span><span>06-12</span><span>06-15</span><span>06-18</span></div></div><footer><span>当前均价 <b>¥153.2/kg</b></span><span>近30日 <b>+4.6%</b></span></footer></section>
+    <section className="market-card market-demand"><header><Flame/><h2>热门需求方向</h2></header><RankRows rows={demands} orange/><button className="market-detail" onClick={()=>nav('/procurement')}>查看详细采购需求 <ChevronRight /></button></section>
+    <section className="market-card market-regions"><header><MapPin/><h2>热门采购地区</h2></header><RankRows rows={cities}/></section>
+    <section className="market-card market-supply"><header><Scale/><h2>市场供需</h2></header><div className="market-supply-values"><div><span><ShoppingCart/></span><p>采购需求总量<strong>186<small>吨</small></strong></p></div><div><span><Box/></span><p>平台现货供应<strong>235<small>吨</small></strong></p></div><div><span><BarChart3/></span><p>今日新增需求<strong>32<small>条</small></strong></p></div></div><footer><ShieldCheck/>当前状态：整体平稳，<b>冰鲜3~4kg需求偏旺</b></footer></section>
+  </div>
+ </main> }

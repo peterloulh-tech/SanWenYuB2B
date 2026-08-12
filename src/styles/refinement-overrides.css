@@ -1,0 +1,123 @@
+:root {
+  --platform-ink: #00015f;
+  --platform-muted: #434973;
+  --platform-blue: #0051fe;
+}
+
+body { color: var(--platform-ink); }
+p, small, .service-crumb, .tp-crumb { color: var(--platform-muted); }
+a, button { transition: color .18s ease, background-color .18s ease, border-color .18s ease; }
+.btn-primary { background: var(--platform-blue); padding-top: 6px; padding-bottom: 6px; }
+.btn-outline { border-color: var(--platform-blue); color: var(--platform-blue); padding-top: 5px; padding-bottom: 5px; }
+.nav-active-line {
+  height: 2px;
+  background: var(--platform-blue);
+}
+.nav-new { background: #ff563d; }
+.tp-page, .finance-page, .market-page, .order-fulfillment-page { color: var(--platform-ink); }
+.tp-title-row p, .tp-confirm-title p, .tp-good-body p, .tp-demand-name p,
+.finance-copy > p:last-of-type, .finance-desc, .finance-product-card header p,
+.finance-product-card footer small, .finance-side button small, .order-title p {
+  color: var(--platform-muted);
+}
+.market-heading h1, .market-card > header h2, .market-summary-values span,
+.market-tip p, .market-controls button, .market-chart > footer,
+.market-ranks > div, .market-supply-values p, .market-supply footer {
+  color: var(--platform-ink);
+}
+.hero-search button, .home-product-grid article > a,
+.home-finance-actions button:last-child, .home-supplier-row > em,
+.tp-pagination button.active, .market-controls button.active,
+.documents-card aside button.primary {
+  border-color: var(--platform-blue);
+  background: var(--platform-blue);
+}
+
+/* 首页：图标居左，标题与说明在右侧上下排列。 */
+.quick-actions .action-card {
+  position: relative;
+  min-height: 80px;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 10px 40px 10px 20px;
+  text-align: left;
+}
+.quick-actions .action-card .text-left { text-align: left; }
+.quick-actions .action-card b,
+.quick-actions .action-card small { display: block; }
+.quick-actions .action-card > svg:last-child { position: absolute; right: 17px; top: 50%; transform: translateY(-50%); }
+
+/* 全站按钮稍收紧，统一主题蓝。 */
+.tp-primary, .tp-outline, .primary-large, .secondary-large { height: 40px; }
+.tp-primary, .primary-large { background: var(--platform-blue); }
+.tp-outline, .secondary-large { border-color: var(--platform-blue); color: var(--platform-blue); }
+.market-tip button { padding-top: 8px; padding-bottom: 8px; background: var(--platform-blue); }
+.section-card > header .list-search.compact button {
+  color: #fff;
+}
+
+/* 产品大厅 */
+.tp-good-image span { padding-top: 1px; padding-bottom: 1px; }
+
+/* 采购大厅与采购详情 */
+.tp-demand-list article > img { margin-left: 16px; }
+.tp-demand-company span,
+.tp-request-summary footer span,
+.tp-quote-company span {
+  display: inline-flex;
+  border-radius: 4px;
+  background: #bdd4ff;
+  padding: 2px 7px;
+  color: var(--platform-ink);
+}
+.tp-demand-page .tp-title-actions .tp-outline { border-color: #cbd1dd; color: #333; }
+.tp-demand-list article .tp-outline,
+.tp-quote-actions .tp-outline { border-color: var(--platform-blue); color: var(--platform-blue); }
+
+/* 确认采购 */
+.tp-confirm-title { margin-left: 0; margin-right: 0; }
+.tp-confirm-title > span { border-color: #ffb185; background: #fff0e7; padding: 5px 14px; }
+.tp-selected-grid { margin-left: 22px; }
+.tp-confirm-bottom article > p { margin-left: 22px; }
+.tp-confirm-bottom article:first-child button {
+  position: static;
+  display: block;
+  margin: 7px 0 0 160px;
+}
+
+/* 订单履约 */
+.overview-product p b { width: 112px; }
+.overview-product p strong { width: 145px; }
+.overview-parties { padding-left: 35px; }
+.overview-parties p { display: flex; align-items: center; }
+.overview-parties p strong { width: 205px; margin-left: 24px; }
+.overview-parties span { margin-left: 0; vertical-align: middle; }
+.overview-state { padding-left: 42px; }
+.overview-state em { font-weight: 900; }
+
+/* 市场行情前三名数字始终保持白色。 */
+.market-demand .market-ranks b.orange { color: #fff !important; }
+
+/* 供应链金融 */
+.finance-hero {
+  background-image: linear-gradient(90deg, rgba(247,251,255,.97) 0%, rgba(247,251,255,.83) 29%, rgba(247,251,255,.12) 50%, rgba(247,251,255,.01) 100%), url('/assets/finance-aquaculture-hero-v2.png');
+}
+.finance-hero-actions { margin-bottom: 34px; }
+.finance-stats, .finance-notice { bottom: 16px; }
+.finance-product-card { display: flex; flex-direction: column; }
+.finance-product-card footer { margin-top: auto; }
+.finance-side button { padding-top: 7px; padding-bottom: 7px; }
+.bank-panel > div { gap: 4px; margin-top: 8px; }
+.bank-panel > div span { height: 32px; padding: 4px 6px; }
+
+@media (max-width: 1100px) {
+  .quick-actions .action-card { gap: 10px; padding-left: 12px; padding-right: 28px; }
+  .tp-demand-list article > img { margin-left: 8px; }
+}
+
+@media (max-width: 768px) {
+  .tp-selected-grid,
+  .tp-confirm-bottom article > p { margin-left: 10px; }
+  .tp-confirm-bottom article:first-child button { margin-left: 10px; }
+}
