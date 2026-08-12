@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.vite/
+.tmp_design_review/
+.tmp_design_review.zip
+*.log
+projectFiles
+AGENTS.md
