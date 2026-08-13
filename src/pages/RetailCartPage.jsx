@@ -1,15 +1,16 @@
 import { useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Check, ChevronRight, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
 import { buildDemoCart, calculateRetailCart, clampRetailQuantity } from '../features/retail/retailCart'
+import { serializeRetailCheckoutItems } from '../features/retail/retailCheckout'
 import '../styles/retail-pages.css'
 
 const cartSteps = ['购物车', '确认订单', '下单完成']
 
 export default function RetailCartPage() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const [items, setItems] = useState(() => buildDemoCart(searchParams.get('product'), searchParams.get('quantity')))
-  const [checkoutPrompt, setCheckoutPrompt] = useState(false)
   const summary = useMemo(() => calculateRetailCart(items), [items])
   const allSelected = items.length > 0 && items.every(item => item.selected)
 
@@ -69,7 +70,7 @@ export default function RetailCartPage() {
           <p><span>演示运费</span><b>¥{summary.shippingFee.toFixed(2)}</b></p>
           <div><span>应付合计</span><strong>¥{summary.payableAmount.toFixed(2)}</strong></div>
           <small><Check />当前金额仅用于静态页面展示</small>
-          <button type="button" disabled={!summary.selectedKinds} onClick={() => setCheckoutPrompt(true)}>去结算</button>
+          <button type="button" disabled={!summary.selectedKinds} onClick={() => navigate(`/retail/checkout?items=${encodeURIComponent(serializeRetailCheckoutItems(items))}`)}>去结算</button>
         </aside>
       </div> : <section className="retail-cart-empty">
         <span><ShoppingCart /></span><h1>购物车暂无商品</h1>
@@ -78,12 +79,5 @@ export default function RetailCartPage() {
       </section>}
     </div>
 
-    {checkoutPrompt && <div className="retail-preview-backdrop" role="presentation">
-      <section className="retail-action-dialog" role="dialog" aria-modal="true" aria-labelledby="retail-checkout-title">
-        <span>去结算</span><h2 id="retail-checkout-title">确认订单页面将在下一阶段开放</h2>
-        <p>结算页面需按文字草图确认后开发，本次操作不会产生真实订单或支付。</p>
-        <button type="button" onClick={() => setCheckoutPrompt(false)}>继续查看购物车</button>
-      </section>
-    </div>}
   </main>
 }

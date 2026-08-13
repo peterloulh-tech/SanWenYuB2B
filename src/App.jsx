@@ -20,6 +20,7 @@ import MobileTradePage from './pages/MobileTradePage'
 import RetailHomePage from './pages/RetailHomePage'
 import RetailProductPage from './pages/RetailProductPage'
 import RetailCartPage from './pages/RetailCartPage'
+import RetailCheckoutPage from './pages/RetailCheckoutPage'
 import IndustryServicesPage from './pages/IndustryServicesPage'
 import IndustryProductsPage from './pages/IndustryProductsPage'
 import IndustryServiceDetailPage from './pages/IndustryServiceDetailPage'
@@ -32,6 +33,7 @@ export default function App() {
       <Route path="retail" element={<RetailHomePage />} />
       <Route path="retail/products/:id" element={<RetailProductPage />} />
       <Route path="retail/cart" element={<RetailCartPage />} />
+      <Route path="retail/checkout" element={<RetailCheckoutPage />} />
       <Route path="products" element={<ProductListPage />} />
       <Route path="products/:id" element={<ProductDetailPage />} />
       <Route path="procurement" element={<ProcurementPage />} />
