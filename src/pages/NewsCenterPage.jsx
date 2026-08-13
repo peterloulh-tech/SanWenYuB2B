@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CalendarClock, ChevronRight, FileSearch, Newspaper, ShieldCheck } from 'lucide-react'
+import { ChevronRight, FileSearch, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { filterNewsItems, newsCategories } from '../data/newsCenter'
 import '../styles/news-center.css'
@@ -11,13 +11,9 @@ export default function NewsCenterPage() {
 
   return <main className="news-center-page">
     <section className="news-center-hero">
-      <div className="page-container">
-        <p className="news-breadcrumb"><Link to="/">首页</Link><ChevronRight />新闻政策</p>
-        <div>
-          <span className="news-hero-icon"><Newspaper /></span>
-          <div><h1>新闻政策与产业动态</h1><p>汇集权威资料，为企业经营决策提供清晰参考</p></div>
-        </div>
-        <aside><ShieldCheck />后续引入的新闻与政策将逐条标注发布单位、日期和原文链接</aside>
+      <div className="page-container news-center-hero-inner">
+        <div><p className="news-breadcrumb"><Link to="/">首页</Link><ChevronRight />新闻政策</p><h1>新闻政策与产业动态</h1><p>汇集权威资料，为企业经营决策提供清晰参考</p></div>
+        <aside><ShieldCheck /><span><b>真实来源可核验</b><small>权威来源 · 标注日期 · 提供原文</small></span></aside>
       </div>
     </section>
 
@@ -34,8 +30,8 @@ export default function NewsCenterPage() {
 
       <section className="news-list-shell">
         <header>
-          <div><h2>{activeName}</h2><p>资料录入后将在此按时间展示</p></div>
-          <span><CalendarClock />内容待更新</span>
+          <div><h2>{activeName}</h2><span>待引入真实资讯</span></div>
+          <p>来源核验后发布</p>
         </header>
         {items.length > 0 ? <div className="news-card-list">
           {items.map(item => <article key={item.id}>
@@ -46,8 +42,7 @@ export default function NewsCenterPage() {
           </article>)}
         </div> : <div className="news-empty-state">
           <span><FileSearch /></span>
-          <h2>真实资讯待引入</h2>
-          <p>当前不展示占位文章或虚构动态。<br />完成资料抓取与来源核验后，将在此显示真实内容。</p>
+          <div><h2>真实资讯待引入</h2><p>当前不展示占位文章或虚构动态。<br />完成资料抓取与来源核验后，将在此显示真实内容。</p></div>
           <Link to="/">返回企业首页</Link>
         </div>}
       </section>
