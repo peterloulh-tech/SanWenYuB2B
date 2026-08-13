@@ -30,11 +30,11 @@
 
 ## 项目文档
 
-- `AGENTS.md`：项目长期上下文和基础规则。
+- `AGENTS.md`：始终生效的精简执行规则和文档路由。
 - `docs/CURRENT_STATE.md`：新会话恢复入口和项目当前进度快照。
 - `docs/PROJECT_OVERVIEW.md`：项目定位、背景、用户与阶段目标。
 - `docs/REQUIREMENTS.md`：全产业链、B2B/B2C 和总需求方向。
-- `docs/DEMO_GUIDE.md`：快速静态演示、低滚动和联网资料规则。
+- `docs/DEVELOPMENT_WORKFLOW.md`：页面确认、开发验证、Dashi 和汇报流程。
 - `docs/PAGES_AND_FLOWS.md`：页面、路由和业务链路。
 - `docs/UI_REFERENCE.md`：UI 原稿、PPT 和现有代码对照。
 - `docs/CHANGELOG.md`：关键需求变化。
@@ -99,7 +99,7 @@ salmon-digital-platform/
 ├─ public/
 │  └─ assets/                 # 首页横幅等公共静态资源
 ├─ projectFiles/              # 原始方案汇报和界面设计图
-├─ docs/                      # 项目介绍、需求、演示规则和页面链路
+├─ docs/                      # 当前状态、需求、开发流程和页面链路
 ├─ src/
 │  ├─ App.jsx                 # 路由配置
 │  ├─ components/             # 公共布局、UI 和业务组件
@@ -109,7 +109,7 @@ salmon-digital-platform/
 │  ├─ services/               # Mock API 与未来真实 API 访问层
 │  ├─ index.css               # Tailwind 引入和全局样式
 │  └─ main.jsx                # React 应用入口
-├─ AGENTS.md                  # 项目长期上下文、功能清单和变更记录
+├─ AGENTS.md                  # 精简执行规则和文档路由
 ├─ index.html                 # Vite HTML 入口
 ├─ package.json               # 项目依赖和脚本
 ├─ vite.config.js             # Vite 和 Tailwind 配置
