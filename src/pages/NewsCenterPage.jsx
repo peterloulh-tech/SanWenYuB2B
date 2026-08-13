@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronRight, FileSearch, ShieldCheck } from 'lucide-react'
+import { ChevronRight, FileSearch } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { filterNewsItems, newsCategories } from '../data/newsCenter'
 import '../styles/news-center.css'
@@ -13,21 +13,19 @@ export default function NewsCenterPage() {
     <section className="news-center-hero">
       <div className="page-container news-center-hero-inner">
         <div><p className="news-breadcrumb"><Link to="/">首页</Link><ChevronRight />新闻政策</p><h1>新闻政策与产业动态</h1><p>汇集权威资料，为企业经营决策提供清晰参考</p></div>
-        <aside><ShieldCheck /><span><b>真实来源可核验</b><small>权威来源 · 标注日期 · 提供原文</small></span></aside>
+        <nav className="news-category-tabs" aria-label="资讯分类">
+          {newsCategories.map(category => <button
+            aria-pressed={activeCategory === category.id}
+            className={activeCategory === category.id ? 'active' : ''}
+            key={category.id}
+            onClick={() => setActiveCategory(category.id)}
+            type="button"
+          >{category.name}</button>)}
+        </nav>
       </div>
     </section>
 
     <section className="page-container news-center-content">
-      <nav className="news-category-tabs" aria-label="资讯分类">
-        {newsCategories.map(category => <button
-          aria-pressed={activeCategory === category.id}
-          className={activeCategory === category.id ? 'active' : ''}
-          key={category.id}
-          onClick={() => setActiveCategory(category.id)}
-          type="button"
-        >{category.name}</button>)}
-      </nav>
-
       <section className="news-list-shell">
         <header>
           <div><h2>{activeName}</h2><span>待引入真实资讯</span></div>
@@ -42,8 +40,7 @@ export default function NewsCenterPage() {
           </article>)}
         </div> : <div className="news-empty-state">
           <span><FileSearch /></span>
-          <div><h2>真实资讯待引入</h2><p>当前不展示占位文章或虚构动态。<br />完成资料抓取与来源核验后，将在此显示真实内容。</p></div>
-          <Link to="/">返回企业首页</Link>
+          <div><h2>暂无新闻政策内容</h2><p>当前不展示占位文章或虚构动态。<br />完成资料抓取与来源核验后，将在此更新内容。</p></div>
         </div>}
       </section>
     </section>

@@ -4,16 +4,14 @@ import test from 'node:test'
 const newsCenterData = await import('../src/data/newsCenter.js').catch(() => null)
 const marketData = await import('../src/data/marketData.js').catch(() => null)
 
-test('资讯中心预留需求中的五类内容', () => {
+test('资讯中心只保留综合、国家政策和时事新闻三类内容', () => {
   assert.ok(newsCenterData, '需要提供资讯中心数据模块')
   assert.deepEqual(
     newsCenterData.newsCategories.map(({ id, name }) => ({ id, name })),
     [
       { id: 'all', name: '综合' },
-      { id: 'state-owned', name: '国企新闻' },
-      { id: 'local-policy', name: '日照/青岛政策' },
       { id: 'national-policy', name: '国家政策' },
-      { id: 'project-progress', name: '项目进展' },
+      { id: 'current-affairs', name: '时事新闻' },
     ],
   )
 })

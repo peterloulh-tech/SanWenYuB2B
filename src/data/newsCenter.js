@@ -1,9 +1,7 @@
 export const newsCategories = [
   { id: 'all', name: '综合' },
-  { id: 'state-owned', name: '国企新闻' },
-  { id: 'local-policy', name: '日照/青岛政策' },
   { id: 'national-policy', name: '国家政策' },
-  { id: 'project-progress', name: '项目进展' },
+  { id: 'current-affairs', name: '时事新闻' },
 ]
 
 // 真实资讯将在完成来源核验后单独引入，当前不放置演示文章。
