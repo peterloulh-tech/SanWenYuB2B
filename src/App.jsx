@@ -21,6 +21,7 @@ import RetailHomePage from './pages/RetailHomePage'
 import RetailProductPage from './pages/RetailProductPage'
 import RetailCartPage from './pages/RetailCartPage'
 import IndustryServicesPage from './pages/IndustryServicesPage'
+import IndustryProductsPage from './pages/IndustryProductsPage'
 import IndustryServiceDetailPage from './pages/IndustryServiceDetailPage'
 import ServiceRequestSuccessPage from './pages/ServiceRequestSuccessPage'
 
@@ -39,6 +40,7 @@ export default function App() {
       <Route path="market" element={<MarketPage />} />
       <Route path="suppliers" element={<SuppliersPage />} />
       <Route path="services" element={<IndustryServicesPage />} />
+      <Route path="industry-products" element={<IndustryProductsPage />} />
       <Route path="services/request/success" element={<ServiceRequestSuccessPage />} />
       <Route path="services/:id" element={<IndustryServiceDetailPage />} />
       <Route path="services/orders" element={<OrdersPage />} />

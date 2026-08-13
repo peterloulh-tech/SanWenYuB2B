@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { additionalEnterpriseActions } from '../src/data/enterpriseHomeActions.js'
+import { additionalEnterpriseActions, enterprisePrimaryActions } from '../src/data/enterpriseHomeActions.js'
 import * as industryServiceData from '../src/data/industryServices.js'
 
 const {
@@ -10,17 +10,30 @@ const {
   findIndustryService,
 } = industryServiceData
 
-test('企业首页第二排提供一个产业服务入口和三个待定入口', () => {
+test('企业首页第二排将三个产业链入口指向同一个大厅并携带环节筛选', () => {
   assert.equal(additionalEnterpriseActions.length, 4)
   assert.deepEqual(
     additionalEnterpriseActions.map(({ title, path }) => ({ title, path })),
     [
       { title: '产业服务', path: '/services' },
-      { title: '功能待定', path: null },
-      { title: '功能待定', path: null },
-      { title: '功能待定', path: null },
+      { title: '上游供应', path: '/industry-products?stage=upstream' },
+      { title: '中游产品', path: '/industry-products?stage=midstream' },
+      { title: '下游产品', path: '/industry-products?stage=downstream' },
     ],
   )
+})
+
+test('企业首页第一排以新闻政策替换行情快捷卡片并保留阶段提示', () => {
+  assert.deepEqual(
+    enterprisePrimaryActions.map(({ title, path }) => ({ title, path })),
+    [
+      { title: '我要采购', path: '/products' },
+      { title: '我要卖鱼', path: '/suppliers' },
+      { title: '我要找货', path: '/procurement' },
+      { title: '新闻政策', path: null },
+    ],
+  )
+  assert.match(enterprisePrimaryActions[3].pendingMessage, /后续阶段/)
 })
 
 test('产业服务大厅覆盖六类企业服务', () => {
