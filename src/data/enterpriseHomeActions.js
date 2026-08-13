@@ -24,8 +24,7 @@ export const enterprisePrimaryActions = [
     icon: 'news',
     title: '新闻政策',
     description: '查看行业资讯与政策动态',
-    path: null,
-    pendingMessage: '新闻政策页面将在后续阶段开发',
+    path: '/news',
     color: 'violet',
   },
 ]

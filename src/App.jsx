@@ -26,6 +26,8 @@ import IndustryProductsPage from './pages/IndustryProductsPage'
 import LegacyIndustryProductsRedirect from './pages/LegacyIndustryProductsRedirect'
 import IndustryServiceDetailPage from './pages/IndustryServiceDetailPage'
 import ServiceRequestSuccessPage from './pages/ServiceRequestSuccessPage'
+import NewsCenterPage from './pages/NewsCenterPage'
+import NewsDetailPage from './pages/NewsDetailPage'
 
 export default function App() {
   return <Routes>
@@ -42,6 +44,8 @@ export default function App() {
       <Route path="procurement/:id" element={<ProcurementDetailPage />} />
       <Route path="procurement/:id/confirm" element={<OrderConfirmPage />} />
       <Route path="market" element={<MarketPage />} />
+      <Route path="news" element={<NewsCenterPage />} />
+      <Route path="news/:id" element={<NewsDetailPage />} />
       <Route path="suppliers" element={<SuppliersPage />} />
       <Route path="services" element={<IndustryServicesPage />} />
       <Route path="industry-products" element={<LegacyIndustryProductsRedirect />} />

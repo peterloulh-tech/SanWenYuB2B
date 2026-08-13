@@ -23,17 +23,17 @@ test('企业首页第二排将三类商品入口指向统一企业商品大厅',
   )
 })
 
-test('企业首页第一排以新闻政策替换行情快捷卡片并保留阶段提示', () => {
+test('企业首页第一排的新闻政策可直接进入资讯中心', () => {
   assert.deepEqual(
     enterprisePrimaryActions.map(({ title, path }) => ({ title, path })),
     [
       { title: '我要采购', path: '/products' },
       { title: '我要卖鱼', path: '/suppliers' },
       { title: '我要找货', path: '/procurement' },
-      { title: '新闻政策', path: null },
+      { title: '新闻政策', path: '/news' },
     ],
   )
-  assert.match(enterprisePrimaryActions[3].pendingMessage, /后续阶段/)
+  assert.equal(enterprisePrimaryActions[3].pendingMessage, undefined)
 })
 
 test('产业服务大厅覆盖六类企业服务', () => {
