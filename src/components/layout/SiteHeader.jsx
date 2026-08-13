@@ -9,7 +9,7 @@ const enterpriseNavs = [
   ["/procurement", "采购大厅"],
   ["/market", "市场行情"],
   ["/suppliers", "供应商"],
-  ["/services/orders", "交易服务"],
+  ["/services", "产业服务"],
   ["/finance", "供应链金融"],
 ];
 

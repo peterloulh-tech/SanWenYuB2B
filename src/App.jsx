@@ -18,6 +18,9 @@ import OrderDetailPage from './pages/OrderDetailPage'
 import MobileHomePage from './pages/MobileHomePage'
 import MobileTradePage from './pages/MobileTradePage'
 import RetailHomePage from './pages/RetailHomePage'
+import IndustryServicesPage from './pages/IndustryServicesPage'
+import IndustryServiceDetailPage from './pages/IndustryServiceDetailPage'
+import ServiceRequestSuccessPage from './pages/ServiceRequestSuccessPage'
 
 export default function App() {
   return <Routes>
@@ -31,6 +34,9 @@ export default function App() {
       <Route path="procurement/:id/confirm" element={<OrderConfirmPage />} />
       <Route path="market" element={<MarketPage />} />
       <Route path="suppliers" element={<SuppliersPage />} />
+      <Route path="services" element={<IndustryServicesPage />} />
+      <Route path="services/request/success" element={<ServiceRequestSuccessPage />} />
+      <Route path="services/:id" element={<IndustryServiceDetailPage />} />
       <Route path="services/orders" element={<OrdersPage />} />
       <Route path="services/orders/:id" element={<OrderDetailPage />} />
       <Route path="finance" element={<FinancePage />} />
