@@ -56,7 +56,7 @@ export default function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          {isRetail && <button className="retail-cart-link" type="button" title="购物车页面将在后续确认后实现">
+          {isRetail && <button className="retail-cart-link" type="button" onClick={() => navigate("/retail/cart")}>
             <ShoppingCart />购物车
           </button>}
           <button className="btn-outline" onClick={() => navigate("/login")}>

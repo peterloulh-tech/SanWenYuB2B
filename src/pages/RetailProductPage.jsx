@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, MapPin, Minus, Plus, ShieldCheck, Snowflake, Truck } from 'lucide-react'
 import { findRetailCategory, findRetailProduct } from '../data/retailData'
 import '../styles/retail-pages.css'
 
 export default function RetailProductPage() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const product = findRetailProduct(id)
   const [quantity, setQuantity] = useState(1)
   const [prompt, setPrompt] = useState(null)
@@ -65,7 +66,7 @@ export default function RetailProductPage() {
         </div>
 
         <div className="retail-detail-actions">
-          <button className="secondary" type="button" onClick={() => setPrompt('加入购物车')}>加入购物车</button>
+          <button className="secondary" type="button" onClick={() => navigate(`/retail/cart?product=${product.id}&quantity=${quantity}`)}>加入购物车</button>
           <button className="primary" type="button" onClick={() => setPrompt('立即购买')}>立即购买</button>
         </div>
       </div>
