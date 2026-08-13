@@ -85,3 +85,21 @@ export const industryServices = [
 export function findIndustryService(id) {
   return industryServices.find((service) => service.id === id) ?? null
 }
+
+export function getIndustryServiceCardFacts(service) {
+  return [
+    { label: '服务地区', value: service.region },
+    { label: '服务能力', value: service.capacity },
+    { label: '计价方式', value: service.pricing },
+    { label: '服务周期', value: service.leadTime },
+  ]
+}
+
+export function filterIndustryServices(services, { category = 'all', keyword = '' } = {}) {
+  const normalizedKeyword = keyword.trim().toLowerCase()
+  return services.filter((service) => {
+    const matchesCategory = category === 'all' || service.category === category
+    const searchText = `${service.name}${service.provider}${service.region}`.toLowerCase()
+    return matchesCategory && (!normalizedKeyword || searchText.includes(normalizedKeyword))
+  })
+}

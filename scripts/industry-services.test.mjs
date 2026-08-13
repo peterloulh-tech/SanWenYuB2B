@@ -2,11 +2,13 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import { additionalEnterpriseActions } from '../src/data/enterpriseHomeActions.js'
-import {
+import * as industryServiceData from '../src/data/industryServices.js'
+
+const {
   industryServiceCategories,
   industryServices,
   findIndustryService,
-} from '../src/data/industryServices.js'
+} = industryServiceData
 
 test('企业首页第二排提供一个产业服务入口和三个待定入口', () => {
   assert.equal(additionalEnterpriseActions.length, 4)
@@ -45,4 +47,29 @@ test('每项产业服务具备列表和详情展示所需的完整演示信息',
   }
 
   assert.equal(findIndustryService('not-found'), null)
+})
+
+test('推荐服务卡片统一生成两行四项业务信息', () => {
+  assert.equal(typeof industryServiceData.getIndustryServiceCardFacts, 'function')
+  assert.deepEqual(
+    industryServiceData.getIndustryServiceCardFacts(industryServices[0]),
+    [
+      { label: '服务地区', value: '山东日照' },
+      { label: '服务能力', value: '每日可加工 30 吨' },
+      { label: '计价方式', value: '¥1.8/kg 起' },
+      { label: '服务周期', value: '确认后 24 小时内排产' },
+    ],
+  )
+})
+
+test('产业服务搜索同时匹配名称、服务商和地区', () => {
+  assert.equal(typeof industryServiceData.filterIndustryServices, 'function')
+  assert.deepEqual(
+    industryServiceData.filterIndustryServices(industryServices, { category: 'all', keyword: '青岛' }).map(({ id }) => id),
+    ['cold-packaging', 'coastal-shipping'],
+  )
+  assert.deepEqual(
+    industryServiceData.filterIndustryServices(industryServices, { category: 'inspection', keyword: '' }).map(({ id }) => id),
+    ['quality-inspection'],
+  )
 })
