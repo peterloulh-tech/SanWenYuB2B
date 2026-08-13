@@ -10,15 +10,15 @@ const {
   findIndustryService,
 } = industryServiceData
 
-test('企业首页第二排将三个产业链入口指向同一个大厅并携带环节筛选', () => {
+test('企业首页第二排将三类商品入口指向统一企业商品大厅', () => {
   assert.equal(additionalEnterpriseActions.length, 4)
   assert.deepEqual(
     additionalEnterpriseActions.map(({ title, path }) => ({ title, path })),
     [
       { title: '产业服务', path: '/services' },
-      { title: '上游供应', path: '/industry-products?stage=upstream' },
-      { title: '中游产品', path: '/industry-products?stage=midstream' },
-      { title: '下游产品', path: '/industry-products?stage=downstream' },
+      { title: '养殖供应', path: '/products?section=aquaculture' },
+      { title: '深加工品', path: '/products?section=processed' },
+      { title: '其他海产', path: '/products?section=seafood' },
     ],
   )
 })

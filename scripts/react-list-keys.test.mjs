@@ -16,7 +16,7 @@ test('已知的演示页列表项都使用稳定且唯一的 key', async () => {
 
   assert.match(productDetail, /photos\.map\(\(x,i\)=><img[^>]+key=\{`\$\{x\}-\$\{i\}`\}/)
   assert.match(productDetail, /map\(\(\[t,img\]\)=><figure key=\{t\}>/)
-  assert.match(productDetail, /map\(\(\[n,p,s,img\],i\)=><article key=\{n\}>/)
+  assert.match(productDetail, /recommendations\.map\(\(item\)=><article key=\{item\.id\}>/)
   assert.match(procurement, /\[1,2,3,4\]\.map\(n=><button className=\{[^}]+\} key=\{n\}>/)
   assert.match(procurementDetail, /map\(\(\[k,v\],i\)=><div key=\{k\}>/)
   assert.match(help, /map\(\(\[I,t\]\)=><div className="help-card" key=\{t\}>/)

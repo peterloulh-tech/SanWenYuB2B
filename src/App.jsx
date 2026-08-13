@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import SiteLayout from './layouts/SiteLayout'
 import HomePage from './pages/HomePage'
-import ProductListPage from './pages/ProductListPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import ProcurementPage from './pages/ProcurementPage'
 import MarketPage from './pages/MarketPage'
@@ -24,6 +23,7 @@ import RetailCheckoutPage from './pages/RetailCheckoutPage'
 import RetailOrderSuccessPage from './pages/RetailOrderSuccessPage'
 import IndustryServicesPage from './pages/IndustryServicesPage'
 import IndustryProductsPage from './pages/IndustryProductsPage'
+import LegacyIndustryProductsRedirect from './pages/LegacyIndustryProductsRedirect'
 import IndustryServiceDetailPage from './pages/IndustryServiceDetailPage'
 import ServiceRequestSuccessPage from './pages/ServiceRequestSuccessPage'
 
@@ -36,7 +36,7 @@ export default function App() {
       <Route path="retail/cart" element={<RetailCartPage />} />
       <Route path="retail/checkout" element={<RetailCheckoutPage />} />
       <Route path="retail/order-success" element={<RetailOrderSuccessPage />} />
-      <Route path="products" element={<ProductListPage />} />
+      <Route path="products" element={<IndustryProductsPage />} />
       <Route path="products/:id" element={<ProductDetailPage />} />
       <Route path="procurement" element={<ProcurementPage />} />
       <Route path="procurement/:id" element={<ProcurementDetailPage />} />
@@ -44,7 +44,7 @@ export default function App() {
       <Route path="market" element={<MarketPage />} />
       <Route path="suppliers" element={<SuppliersPage />} />
       <Route path="services" element={<IndustryServicesPage />} />
-      <Route path="industry-products" element={<IndustryProductsPage />} />
+      <Route path="industry-products" element={<LegacyIndustryProductsRedirect />} />
       <Route path="services/request/success" element={<ServiceRequestSuccessPage />} />
       <Route path="services/:id" element={<IndustryServiceDetailPage />} />
       <Route path="services/orders" element={<OrdersPage />} />

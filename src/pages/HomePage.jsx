@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { BadgeDollarSign, BarChart3, Building2, ChevronRight, ClipboardCheck, Factory, Fish, MapPin, Newspaper, Search, ShieldCheck, ShoppingCart, Sprout, Store, TrendingUp, UsersRound, WalletCards, Wrench } from 'lucide-react'
+import { BadgeDollarSign, BarChart3, Building2, ChevronRight, ClipboardCheck, CookingPot, Fish, MapPin, Newspaper, Search, Shell, ShieldCheck, ShoppingCart, Sprout, TrendingUp, UsersRound, WalletCards, Wrench } from 'lucide-react'
 import { homeService } from '../services/homeService'
 import { additionalEnterpriseActions, enterprisePrimaryActions } from '../data/enterpriseHomeActions'
 import '../styles/home-page.css'
 
 const financeItems = [[Fish,'养殖期融资','鱼在海里，钱先到'],[WalletCards,'存货质押融资','鱼在库里，钱先回来'],[ClipboardCheck,'订单融资','订单在手，资金无忧'],[BadgeDollarSign,'账期支付','先提货，后付款']]
-const actionIcons = { purchase: ShoppingCart, sell: Fish, sourcing: ClipboardCheck, news: Newspaper, service: Wrench, upstream: Sprout, midstream: Factory, downstream: Store }
+const actionIcons = { purchase: ShoppingCart, sell: Fish, sourcing: ClipboardCheck, news: Newspaper, service: Wrench, upstream: Sprout, processed: CookingPot, seafood: Shell }
 
 export default function HomePage(){
   const [data,setData]=useState(null); const navigate=useNavigate()
