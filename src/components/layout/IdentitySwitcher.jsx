@@ -77,10 +77,6 @@ export default function IdentitySwitcher({ accountState = ACCOUNT_STATES.GUEST }
     </button>
 
     {open && <div className="identity-menu" role="menu">
-      <header>
-        <b>切换使用身份</b>
-        <small>游客可自由浏览，交易操作需要登录</small>
-      </header>
       {Object.entries(identityMeta).map(([value, meta]) => {
         const selected = identity === value
         const Icon = meta.Icon
@@ -96,7 +92,6 @@ export default function IdentitySwitcher({ accountState = ACCOUNT_STATES.GUEST }
           {selected && <Check className="identity-menu-check" />}
         </button>
       })}
-      {accountState === ACCOUNT_STATES.GUEST && <footer>未登录状态仅可查看，点击下单、报价或发布时将提示登录/注册。</footer>}
     </div>}
 
     {pendingAction && <div className="identity-dialog-backdrop" role="presentation">
