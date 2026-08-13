@@ -69,7 +69,7 @@ export default function RetailHomePage() {
             <p>规格：{product.spec}</p>
             <div><em>零售价</em><strong>¥{product.price.toFixed(2)}</strong><small>/{product.unit}</small></div>
             <div className="retail-product-actions">
-              <button type="button" onClick={() => setProductPrompt({ type: 'detail', product })} data-detail-path={product.detailPath}>查看详情</button>
+              <button type="button" onClick={() => navigate(product.detailPath)}>查看详情</button>
               <button className="buy" type="button" onClick={() => setProductPrompt({ type: 'buy', product })}>立即购买</button>
             </div>
           </div>
@@ -80,10 +80,10 @@ export default function RetailHomePage() {
       <section className="retail-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="retail-preview-title">
         <img src={productPrompt.product.image} alt="" />
         <div>
-          <span>{productPrompt.type === 'buy' ? '购买提示' : '详情页预告'}</span>
+          <span>购买提示</span>
           <h2 id="retail-preview-title">{productPrompt.product.name}</h2>
-          <p>{productPrompt.type === 'buy' ? '当前为游客浏览状态，登录或注册后即可继续购买。' : '商品详情页将在下一阶段按文字草图确认后实现。'}</p>
-          <button type="button" onClick={() => productPrompt.type === 'buy' ? navigate('/login') : setProductPrompt(null)}>{productPrompt.type === 'buy' ? '登录/注册' : '知道了'}</button>
+          <p>当前为游客浏览状态，登录或注册后即可继续购买。</p>
+          <button type="button" onClick={() => navigate('/login')}>登录/注册</button>
         </div>
       </section>
     </div>}
