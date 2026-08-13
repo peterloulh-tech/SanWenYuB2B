@@ -27,10 +27,10 @@
 - Modify: `src/components/layout/SiteHeader.jsx`
 
 **Interfaces:**
-- Produces: `retailCategories` 四项分类和 `retailProducts` 五件商品。
+- Produces: `retailCategories` 四项分类和 `retailProducts` 七件商品。
 - Produces: `/retail` 页面路由；身份切换分别导航 `/` 与 `/retail`。
 
-- [x] **Step 1:** 编写源代码与数据失败测试，要求四类、五件商品、零售路由和身份导航存在。
+- [x] **Step 1:** 编写源代码与数据失败测试，要求四类、七件商品、零售路由和身份导航存在。
 - [x] **Step 2:** 运行 `node --test scripts/retail-home.test.mjs`，确认因零售文件不存在而失败。
 - [x] **Step 3:** 实现静态数据、路由和按频道变化的页头导航。
 - [x] **Step 4:** 运行 `pnpm test`，确认全部通过。
@@ -61,7 +61,7 @@
 
 **Interfaces:**
 - Consumes: `retailCategories`、`retailProducts`。
-- Produces: 横幅、保障项、四个大分类按钮和五件热门商品卡片。
+- Produces: 横幅、保障项、四个大分类按钮和七件热门商品卡片。
 
 - [x] **Step 1:** 实现紧凑横幅，含搜索、右侧标语和四项保障。
 - [x] **Step 2:** 实现四个大图标分类按钮和五列热门推荐。

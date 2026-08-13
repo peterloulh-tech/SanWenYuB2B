@@ -10,7 +10,7 @@ test('消费零售首页提供四个清晰分类', () => {
   )
 })
 
-test('热门推荐展示五件图文规格和价格完整的商品', () => {
+test('热门推荐展示七件图文规格和价格完整的商品', () => {
   assert.deepEqual(
     retailProducts.map(({ name, spec, price, unit, detailPath }) => ({ name, spec, price, unit, detailPath })),
     [
@@ -19,6 +19,8 @@ test('热门推荐展示五件图文规格和价格完整的商品', () => {
       { name: '低温烟熏三文鱼', spec: '100g/袋', price: 29.9, unit: '袋', detailPath: '/retail/products/smoked-salmon' },
       { name: '蒜蓉粉丝扇贝', spec: '200g/盒', price: 32.9, unit: '盒', detailPath: '/retail/products/garlic-scallops' },
       { name: '日照海鲜家庭礼盒', spec: '2.5kg/箱', price: 199, unit: '箱', detailPath: '/retail/products/seafood-family-gift-box' },
+      { name: '日照海捕大虾', spec: '500g/盒', price: 59.9, unit: '盒', detailPath: '/retail/products/rizhao-prawns' },
+      { name: '鲜活梭子蟹', spec: '500g/盒', price: 79.9, unit: '盒', detailPath: '/retail/products/swimming-crab' },
     ],
   )
 
