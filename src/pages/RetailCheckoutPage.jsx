@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Check, ChevronRight, MapPin, PackageCheck, Truck } from 'lucide-react'
 import { calculateRetailCart } from '../features/retail/retailCart'
-import { parseRetailCheckoutItems, validateRetailCheckoutAddress } from '../features/retail/retailCheckout'
+import { buildRetailOrderSuccessSearch, parseRetailCheckoutItems, validateRetailCheckoutAddress } from '../features/retail/retailCheckout'
 import '../styles/retail-pages.css'
 
 const checkoutSteps = ['购物车', '确认订单', '下单完成']
@@ -15,11 +15,11 @@ const defaultAddress = {
 
 export default function RetailCheckoutPage() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const items = useMemo(() => parseRetailCheckoutItems(searchParams.get('items')), [searchParams])
   const summary = useMemo(() => calculateRetailCart(items), [items])
   const [address, setAddress] = useState(defaultAddress)
   const [errors, setErrors] = useState({})
-  const [orderPrompt, setOrderPrompt] = useState(false)
 
   const updateAddress = (field, value) => {
     setAddress(current => ({ ...current, [field]: value }))
@@ -30,7 +30,9 @@ export default function RetailCheckoutPage() {
     event.preventDefault()
     const nextErrors = validateRetailCheckoutAddress(address)
     setErrors(nextErrors)
-    if (!Object.keys(nextErrors).length) setOrderPrompt(true)
+    if (!Object.keys(nextErrors).length) {
+      navigate(`/retail/order-success?${buildRetailOrderSuccessSearch(items, address.name)}`)
+    }
   }
 
   return <main className="retail-cart-page retail-checkout-page">
@@ -87,12 +89,5 @@ export default function RetailCheckoutPage() {
       </form>
     </div>
 
-    {orderPrompt && <div className="retail-preview-backdrop" role="presentation">
-      <section className="retail-action-dialog" role="dialog" aria-modal="true" aria-labelledby="retail-order-title">
-        <span>演示提交成功</span><h2 id="retail-order-title">下单完成页面将在下一阶段开放</h2>
-        <p>当前仅验证确认订单页面的交互，不会创建真实订单、扣减库存或发起支付。</p>
-        <button type="button" onClick={() => setOrderPrompt(false)}>继续查看订单</button>
-      </section>
-    </div>}
   </main>
 }

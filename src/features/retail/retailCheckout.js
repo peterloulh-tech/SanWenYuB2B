@@ -1,5 +1,5 @@
 import { findRetailProduct } from '../../data/retailData.js'
-import { buildDemoCart, clampRetailQuantity } from './retailCart.js'
+import { buildDemoCart, calculateRetailCart, clampRetailQuantity } from './retailCart.js'
 
 export function serializeRetailCheckoutItems(items) {
   return items
@@ -33,4 +33,24 @@ export function validateRetailCheckoutAddress(address) {
   if (!address.region.trim()) errors.region = '请选择所在地区'
   if (!address.address.trim()) errors.address = '请输入详细地址'
   return errors
+}
+
+export function buildRetailOrderSuccessSearch(items, recipient) {
+  return new URLSearchParams({
+    items: serializeRetailCheckoutItems(items),
+    recipient: recipient.trim(),
+  }).toString()
+}
+
+export function parseRetailOrderSuccess(searchParams) {
+  const items = parseRetailCheckoutItems(searchParams.get('items'))
+  const summary = calculateRetailCart(items)
+  return {
+    orderNumber: 'LS202608130018',
+    recipient: searchParams.get('recipient')?.trim() || '演示用户',
+    selectedKinds: summary.selectedKinds,
+    selectedQuantity: summary.selectedQuantity,
+    payableAmount: summary.payableAmount,
+    estimatedArrival: '预计明日 18:00 前送达',
+  }
 }
