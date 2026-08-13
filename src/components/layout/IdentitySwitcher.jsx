@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { Building2, Check, ChevronDown, ShoppingBag, UserRound } from 'lucide-react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   ACCOUNT_STATES,
   IDENTITIES,
+  getIdentityLandingPath,
   getIdentitySwitchResult,
 } from '../../features/identity/identityPolicy'
 
@@ -33,11 +35,18 @@ const actionCopy = {
 }
 
 export default function IdentitySwitcher({ accountState = ACCOUNT_STATES.GUEST }) {
-  const [identity, setIdentity] = useState(IDENTITIES.ENTERPRISE)
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const routeIdentity = pathname.startsWith('/retail') ? IDENTITIES.PERSONAL : IDENTITIES.ENTERPRISE
+  const [identity, setIdentity] = useState(routeIdentity)
   const [open, setOpen] = useState(false)
   const [pendingAction, setPendingAction] = useState(null)
   const rootRef = useRef(null)
   const identityLabel = identityMeta[identity].label
+
+  useEffect(() => {
+    setIdentity(routeIdentity)
+  }, [routeIdentity])
 
   useEffect(() => {
     const closeOnOutsideClick = (event) => {
@@ -52,6 +61,7 @@ export default function IdentitySwitcher({ accountState = ACCOUNT_STATES.GUEST }
     if (result.action === 'switch') {
       setIdentity(result.targetIdentity)
       setOpen(false)
+      navigate(getIdentityLandingPath(result.targetIdentity))
       return
     }
     setPendingAction(result)
@@ -59,7 +69,10 @@ export default function IdentitySwitcher({ accountState = ACCOUNT_STATES.GUEST }
   }
 
   const confirmPendingAction = () => {
-    if (pendingAction?.action === 'open-personal') setIdentity(IDENTITIES.PERSONAL)
+    if (pendingAction?.action === 'open-personal') {
+      setIdentity(IDENTITIES.PERSONAL)
+      navigate(getIdentityLandingPath(IDENTITIES.PERSONAL))
+    }
     setPendingAction(null)
   }
 

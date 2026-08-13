@@ -27,3 +27,12 @@ export function getIdentitySwitchResult(accountState, targetIdentity) {
 
   return { action: 'switch', targetIdentity }
 }
+
+export function getIdentityLandingPath(identity) {
+  if (!identityValues.has(identity)) throw new Error(`未知目标身份：${identity}`)
+  return identity === IDENTITIES.PERSONAL ? '/retail' : '/'
+}
+
+export function getRetailNavActive(target, pathname) {
+  return target === '/retail' && pathname === '/retail'
+}

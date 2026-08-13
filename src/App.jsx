@@ -17,11 +17,13 @@ import OrderConfirmPage from './pages/OrderConfirmPage'
 import OrderDetailPage from './pages/OrderDetailPage'
 import MobileHomePage from './pages/MobileHomePage'
 import MobileTradePage from './pages/MobileTradePage'
+import RetailHomePage from './pages/RetailHomePage'
 
 export default function App() {
   return <Routes>
     <Route element={<SiteLayout />}>
       <Route index element={<HomePage />} />
+      <Route path="retail" element={<RetailHomePage />} />
       <Route path="products" element={<ProductListPage />} />
       <Route path="products/:id" element={<ProductDetailPage />} />
       <Route path="procurement" element={<ProcurementPage />} />
