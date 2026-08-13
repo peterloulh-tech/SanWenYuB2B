@@ -1,4 +1,5 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import IdentitySwitcher from "./IdentitySwitcher";
 
 const navs = [
   ["/", "首页"],
@@ -21,6 +22,7 @@ export default function SiteHeader() {
           aria-label="返回首页"
           onClick={() => navigate("/")}
         />
+        <IdentitySwitcher />
         <nav className="flex h-full items-center gap-9 text-[16px] font-bold text-[#00015F]">
           {navs.map(([to, label]) => (
             <NavLink
