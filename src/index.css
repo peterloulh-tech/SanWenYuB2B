@@ -7,7 +7,7 @@ button, a { cursor: pointer; }
 .page-container { width: calc(100% - 56px); max-width: 1516px; margin-left: auto; margin-right: auto; }
 .btn-primary { border-radius: 6px; background: #075df5; padding: 8px 20px; color: white; font-weight: 600; box-shadow: 0 6px 15px #075df52b; }
 .btn-outline { border: 1px solid #8db2ff; border-radius: 6px; background: white; padding: 7px 20px; color: #075df5; font-weight: 600; }
-.brand-logo { width: 355px; height: 58px; flex: 0 0 355px; background-image: url('/projectFiles/微信图片_20260811113736_99_53.png'); background-repeat: no-repeat; background-size: 1664px 931px; background-position: -34px -3px; }
+.brand-logo { width: 355px; height: 58px; flex: 0 0 355px; background-image: url('/assets/brand/platform-brand-source.png'); background-repeat: no-repeat; background-size: 1672px 941px; background-position: -34px -3px; }
 .nav-new { position: absolute; right: -17px; top: 7px; display: grid; width: 20px; height: 20px; place-items: center; border-radius: 50%; background: #ff4f25; color: white; font-size: 11px; line-height: 1; }
 .hero-banner { position: relative; height: 240px; overflow: hidden; background: linear-gradient(180deg,#e6f4ff 0%,#eef8ff 52%,#cfeeff 69%,#83c9ef 100%); }
 .hero-banner::before { content: ""; position: absolute; inset: 0; background-image: url('/assets/salmon-hero-bg-v2.png'); background-position: center 70%; background-repeat: no-repeat; background-size: cover; }
@@ -42,7 +42,7 @@ main .metric strong { font-size: 23px; }
 .metric:last-child { border-bottom: 0; }.metric-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; color: white; }.metric small { display:block;font-size:11px;color:#64748b}.metric strong { display:block;font-size:22px;color:#112a60}
 .supplier-logo { display:grid;width:38px;height:38px;place-items:center;border-radius:50%;color:white;background:#0878e8}.supplier-logo.s1{background:#00a98f}.supplier-logo.s2{background:#27aee8}.supplier-logo.s3{background:#ff7b24}
 footer { margin-top: auto !important; }
-@media (max-width: 1420px) { nav { gap: 14px !important; font-size: 14px !important; } .brand-logo { width: 330px; flex-basis: 330px; } .hero-copy h1 { font-size: 32px; } .hero-slogan { right: 25px; } .btn-primary,.btn-outline { padding-left: 14px; padding-right: 14px; } }
+@media (max-width: 1420px) { nav { gap: 14px !important; font-size: 14px !important; } .brand-logo { width: 330px; flex-basis: 330px; background-size: 1554px 875px; background-position: -32px -3px; } .hero-copy h1 { font-size: 32px; } .hero-slogan { right: 25px; } .btn-primary,.btn-outline { padding-left: 14px; padding-right: 14px; } }
 @media (max-width: 1320px) { .hero-banner { height: 250px; } .quick-actions { margin-top: -12px; } .hero-abilities { margin-top: 15px; } }
 
 /* Shared application components */

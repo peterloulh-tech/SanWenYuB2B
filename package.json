@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "check:assets": "node scripts/check-static-assets.mjs",
+    "test": "node --test scripts/*.test.mjs",
+    "build": "pnpm check:assets && vite build",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {

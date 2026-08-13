@@ -1,8 +1,8 @@
 node_modules/
 dist/
 .vite/
+.codex-tmp/
 .tmp_design_review/
 .tmp_design_review.zip
 *.log
 projectFiles
-AGENTS.md

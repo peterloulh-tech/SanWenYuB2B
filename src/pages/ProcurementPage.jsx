@@ -19,6 +19,6 @@ export default function ProcurementPage(){
     <section className="tp-demand-list">{demands.map((d,i)=><article key={d[0]}>
       <span className="tp-buy-label">求购</span><img src={d[7]} alt={d[0]}/><div className="tp-demand-name"><h2>{d[0]}</h2><p>规格　{d[1]}</p></div><dl><div><dt>采购量</dt><dd>{d[2]}</dd></div><div><dt>交付地</dt><dd>{d[3]}</dd></div><div><dt>到货要求</dt><dd>{d[4]}</dd></div></dl><div className="tp-demand-company"><h3>{d[5]}</h3><span><BadgeCheck/>平台认证</span></div><p className="tp-quotes">已有 <strong>{d[6]}</strong> 家报价</p><button className="tp-outline" onClick={()=>nav(`/procurement/CG2026081100${i+1}`)}>查看报价</button>
     </article>)}</section>
-    <div className="tp-list-foot"><p>共 <b>128</b> 条采购需求</p><div className="tp-pagination"><button>上一页</button>{[1,2,3,4].map(n=><button className={n===1?'active':''}>{n}</button>)}<button>下一页</button></div></div>
+    <div className="tp-list-foot"><p>共 <b>128</b> 条采购需求</p><div className="tp-pagination"><button>上一页</button>{[1,2,3,4].map(n=><button className={n===1?'active':''} key={n}>{n}</button>)}<button>下一页</button></div></div>
   </main>
 }
