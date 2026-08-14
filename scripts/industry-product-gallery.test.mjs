@@ -14,7 +14,7 @@ test.after(async () => {
 })
 
 for (const section of enterpriseProductSections) {
-  test(`${section.name}的每个当前商品卡片都展示对应商品图片`, () => {
+  test(`${section.name}的每个当前商品卡片都使用顶部图片和细分类角标`, () => {
     const products = industryProducts.filter((product) => product.section === section.id)
     const entry = section.id === 'fresh' ? '/products' : `/products?section=${section.id}`
     const html = renderToStaticMarkup(
@@ -24,9 +24,11 @@ for (const section of enterpriseProductSections) {
     for (const product of products) {
       assert.match(
         html,
-        new RegExp(`<img[^>]+src="${product.image}"[^>]+alt="${product.name}"`),
-        `${product.name}需要显示商品图片`,
+        new RegExp(`<div class="industry-product-image"><img[^>]+src="${product.image}"[^>]+alt="${product.name}"/><span>${product.category}</span></div>`),
+        `${product.name}需要在顶部图片中显示${product.category}细分类角标`,
       )
     }
+
+    assert.doesNotMatch(html, /平台认证/, '商品图片不再显示平台认证角标')
   })
 }

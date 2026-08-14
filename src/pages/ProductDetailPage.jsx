@@ -3,12 +3,20 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { enterpriseProductSections, findIndustryProduct, industryProducts } from '../data/industryProducts'
 import '../styles/trade-pages.css'
 
+const freshSupplyPhotos={
+  farm:'/assets/products/salmon-farm.jpg',
+  sorting:'/assets/products/salmon-sorting.jpg',
+  delivery:'/assets/products/salmon-cold-chain.jpg',
+}
+
 export default function ProductDetailPage(){
   const nav=useNavigate(); const { id }=useParams(); const product=findIndustryProduct(id)
   if(!product)return <main className="tp-page tp-product-missing"><h1>未找到该商品</h1><p>商品可能已调整，请返回企业商品大厅重新选择。</p><button className="tp-primary" onClick={()=>nav('/products')}>返回商品大厅</button></main>
   const section=enterpriseProductSections.find((item)=>item.id===product.section)
   const recommendations=industryProducts.filter((item)=>item.section===product.section&&item.id!==product.id).slice(0,3)
-  const photos=Array(5).fill(product.image)
+  const productCloseup=product.image==='/assets/products/salmon-fillet.png'?'/assets/products/salmon-slices.png':'/assets/products/salmon-fillet.png'
+  const photos=product.section==='fresh'?[product.image,productCloseup,freshSupplyPhotos.farm,freshSupplyPhotos.sorting,freshSupplyPhotos.delivery]:Array(5).fill(product.image)
+  const supplyPhotos=product.section==='fresh'?[['商品展示',product.image],['企业供应',freshSupplyPhotos.farm],['规格分拣',freshSupplyPhotos.sorting],['包装与配送',freshSupplyPhotos.delivery]]:[['商品展示',product.image],['企业供应',product.image],['规格分拣',product.image],['包装与配送',product.image]]
   return <main className="tp-page tp-detail-page">
     <div className="tp-crumb">首页 <b>›</b> 企业商品大厅 <b>›</b> {section?.name} <b>›</b> 商品详情</div>
     <section className="tp-detail-hero">
@@ -21,7 +29,7 @@ export default function ProductDetailPage(){
     </section>
     <section className="tp-detail-content">
       <div className="tp-basic"><nav>{['商品详情','质量资料','批次追溯','配送说明'].map((item,index)=><button className={index===0?'active':''} key={item}>{item}</button>)}</nav><article><h2>基本信息</h2><div><p>品类：　{product.category}</p><p>供应商：　{product.supplier}</p><p>规格：　{product.spec}</p><p>储存：　{product.storage}</p><p>产地：　{product.region}</p><p>配送：　{product.delivery}</p></div></article></div>
-      <div className="tp-photo-detail"><h2>商品与供应说明</h2><div>{[['商品展示',product.image],['企业供应',product.image],['规格分拣',product.image],['包装与配送',product.image]].map(([t,img])=><figure key={t}><figcaption>{t}</figcaption><img src={img} alt={t}/></figure>)}</div></div>
+      <div className="tp-photo-detail"><h2>商品与供应说明</h2><div>{supplyPhotos.map(([t,img])=><figure key={t}><figcaption>{t}</figcaption><img src={img} alt={t}/></figure>)}</div></div>
     </section>
     <section className="tp-recommend"><h2>相关推荐</h2>{recommendations.map((item)=><article key={item.id}><img src={item.image} alt={item.name}/><div><h3>{item.name}</h3><strong>{item.price}</strong><p>规格：{item.spec}</p></div><button onClick={()=>nav(`/products/${item.id}`)}>查看详情</button></article>)}</section>
   </main>

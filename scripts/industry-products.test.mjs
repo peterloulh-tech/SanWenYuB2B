@@ -46,6 +46,22 @@ test('每项商品具备企业采购浏览所需的信息', () => {
   assert.equal(industryProductData.findIndustryProduct('not-found'), null)
 })
 
+test('复核不匹配的七类商品后使用各自专用图片', () => {
+  const expectedImages = {
+    'salmon-byproducts': '/assets/products/salmon-byproducts.jpg',
+    'salmon-fry': '/assets/products/salmon-fry.jpg',
+    'salmon-vaccine': '/assets/products/salmon-vaccine.jpg',
+    'salmon-feed': '/assets/products/salmon-feed.jpg',
+    'aquaculture-cage': '/assets/products/aquaculture-cage.jpg',
+    'salmon-cakes': '/assets/products/salmon-cakes.jpg',
+    'salmon-prepared-meal': '/assets/products/salmon-prepared-meal.jpg',
+  }
+
+  for (const [id, image] of Object.entries(expectedImages)) {
+    assert.equal(industryProductData.findIndustryProduct(id)?.image, image)
+  }
+})
+
 test('统一大厅同时支持商品分区预筛选和关键词搜索', () => {
   assert.ok(industryProductData, '需要提供全产业链商品数据模块')
   const { filterIndustryProducts, industryProducts } = industryProductData
