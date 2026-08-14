@@ -25,10 +25,17 @@ export default function NewsDetailPage() {
       <dl>
         <div><dt>发布单位</dt><dd>{detail.publisher}</dd></div>
         <div><dt>发布日期</dt><dd>{detail.publishedAt}</dd></div>
+        {detail.contentType && <div><dt>内容分类</dt><dd>{detail.contentType}</dd></div>}
         {detail.documentNumber && <div><dt>政策文号</dt><dd>{detail.documentNumber}</dd></div>}
       </dl>
+      {detail.tags?.length > 0 && <div className="news-detail-tags">{detail.tags.map(tag => <span key={tag}>{tag}</span>)}</div>}
       <section><h2>内容摘要</h2><p>{detail.summary}</p></section>
-      <a href={detail.sourceUrl} rel="noreferrer" target="_blank">查看原文来源</a>
+      {detail.sourceUrl ? <a href={detail.sourceUrl} rel="noreferrer" target="_blank">查看原文来源</a> : <section className="news-source-note">
+        <h2>原文来源</h2>
+        <p>{detail.sourcePlatform}：{detail.publisher}</p>
+        {detail.sourceAccountId && <p>公众号 ID：{detail.sourceAccountId}</p>}
+        <p>{detail.sourceMethod}</p>
+      </section>}
     </article>
   </main>
 }
