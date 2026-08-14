@@ -17,10 +17,57 @@ const baseRegions = [['上海', 2186.5, 12.8], ['北京', 1562.3, 9.3], ['广东
 const baseBuyers = [['某某XX商贸集团', 856.4], ['北京XX生鲜连锁', 664.1], ['深圳XX生鲜供应链', 532.6], ['杭州XX食品商', 412.8], ['广州XX食品集团', 398.1]]
 const baseSpecs = [['2-3kg/条', 100, 1286], ['3-4kg/条', 82, 1018], ['1-2kg/条', 68, 876], ['4-5kg/条', 48, 652], ['5kg以上/条', 28, 348]]
 const basePrices = [56,38,48,14,45,58,25,54,28,52,18,43,24,58,16,34]
+const mapFlows = [
+  { name: '上海', path: 'M 768 294 Q 826 305 824 358', duration: 2.6, delay: 0 },
+  { name: '浙江', path: 'M 768 294 Q 834 340 808 392', duration: 2.8, delay: .35 },
+  { name: '福建', path: 'M 768 294 Q 844 388 788 465', duration: 3.1, delay: .75 },
+  { name: '广东', path: 'M 768 294 Q 742 438 668 507', duration: 3.5, delay: 1.1 },
+  { name: '广西', path: 'M 768 294 Q 702 438 630 518', duration: 3.7, delay: 1.45 },
+  { name: '云南', path: 'M 768 294 Q 650 422 530 479', duration: 4, delay: .2 },
+  { name: '西藏', path: 'M 768 294 Q 568 352 344 380', duration: 4.5, delay: .6 },
+  { name: '青海', path: 'M 768 294 Q 622 300 459 345', duration: 4, delay: 1 },
+  { name: '四川', path: 'M 768 294 Q 642 340 533 387', duration: 3.5, delay: 1.4 },
+  { name: '重庆', path: 'M 768 294 Q 662 328 594 367', duration: 3.2, delay: 1.8 },
+  { name: '湖北', path: 'M 768 294 Q 704 300 648 322', duration: 3, delay: 2.2 },
+  { name: '安徽', path: 'M 768 294 Q 752 316 730 339', duration: 2.8, delay: 2.6 },
+  { name: '河南', path: 'M 768 294 Q 720 264 672 284', duration: 2.9, delay: .25 },
+  { name: '甘肃', path: 'M 768 294 Q 610 228 440 253', duration: 4.1, delay: .65 },
+  { name: '新疆', path: 'M 768 294 Q 548 168 286 224', duration: 4.6, delay: 1.05 },
+  { name: '北京', path: 'M 768 294 Q 718 250 740 220', duration: 2.8, delay: 1.45 },
+  { name: '天津', path: 'M 768 294 Q 792 276 773 259', duration: 2.5, delay: 1.85 },
+  { name: '内蒙古', path: 'M 768 294 Q 692 232 731 177', duration: 3.5, delay: 2.25 },
+  { name: '辽宁', path: 'M 768 294 Q 824 248 865 212', duration: 3.2, delay: 2.65 },
+  { name: '吉林', path: 'M 768 294 Q 836 226 896 161', duration: 3.7, delay: .4 },
+  { name: '黑龙江', path: 'M 768 294 Q 790 188 867 115', duration: 4.1, delay: .8 },
+]
+const mapFlowTailOffsets = [0, .08, .16]
 
 function ScreenPanel({ title, extra, children, className = '' }) { return <section className={`ds-panel ${className}`}><h2><i />{title}{extra && <small>{extra}</small>}</h2>{children}</section> }
 function RankBars({ data }) { return <div className="ds-bars">{data.map(([name, value, total], i) => <div key={name}><b>{i + 1}</b><span>{name}</span><i><em style={{ width: `${value}%` }} /></i><strong>{total}</strong></div>)}</div> }
-function ChinaMap() { return <div className="china-map" role="img" aria-label="中国全景交易流向地图" /> }
+function ChinaMap() {
+  return <div className="china-map" role="img" aria-label="中国全景交易流向地图">
+    <svg className="china-map-flow" viewBox="0 0 1060 640" preserveAspectRatio="none" aria-hidden="true">
+      {mapFlows.map(route => <g key={route.name} data-flow-route={route.name}>
+        {mapFlowTailOffsets.map((offset, particleIndex) => {
+          const begin = route.delay + offset
+          const opacity = particleIndex === 0 ? .98 : particleIndex === 1 ? .58 : .28
+          return <circle
+            className={`map-flow-particle ${particleIndex === 0 ? 'map-flow-particle--head' : 'map-flow-particle--tail'}`}
+            cx="0"
+            cy="0"
+            fill={particleIndex === 0 ? '#fff7c9' : '#ff9d35'}
+            key={`${route.name}-${particleIndex}`}
+            opacity="0"
+            r={particleIndex === 0 ? 3.2 : particleIndex === 1 ? 2.2 : 1.35}
+          >
+            <animateMotion path={route.path} dur={`${route.duration}s`} begin={`${begin}s`} repeatCount="indefinite" />
+            <animate attributeName="opacity" values={`0;${opacity};${opacity};0`} keyTimes="0;.08;.86;1" dur={`${route.duration}s`} begin={`${begin}s`} repeatCount="indefinite" />
+          </circle>
+        })}
+      </g>)}
+    </svg>
+  </div>
+}
 
 const pad = value => String(value).padStart(2, '0')
 function formatTime(date) {
