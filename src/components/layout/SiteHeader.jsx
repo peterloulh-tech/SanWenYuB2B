@@ -1,5 +1,5 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { Monitor, ShoppingCart } from "lucide-react";
 import IdentitySwitcher from "./IdentitySwitcher";
 import { getRetailNavActive } from "../../features/identity/identityPolicy";
 
@@ -65,12 +65,13 @@ export default function SiteHeader() {
           <button className="btn-primary" onClick={() => navigate("/register")}>
             注册
           </button>
-          {!isRetail && <NavLink
-            className="ml-2 whitespace-nowrap text-[16px] font-bold text-[#00015F]"
-            to="/help"
+          {!isRetail && <button
+            className="btn-outline flex items-center gap-1.5 whitespace-nowrap"
+            type="button"
+            onClick={() => navigate("/data-screen")}
           >
-            帮助中心
-          </NavLink>}
+            <Monitor className="h-4 w-4" />运营大屏
+          </button>}
         </div>
       </div>
     </header>
