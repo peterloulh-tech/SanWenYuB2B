@@ -43,9 +43,12 @@ export default function IndustryProductsPage() {
       <section className="industry-products-heading"><div><h2>{selectedSection?.name}</h2><span>共 {products.length} 项静态演示商品</span></div><p>企业采购价仅作展示，实际价格以询价为准</p></section>
       <section className="industry-products-grid">
         {products.map((product) => { const Icon = categoryIcons[product.category] || Boxes; return <article key={product.id}>
-          <header><span><Icon/></span><div><em>{selectedSection?.name}</em><b>{product.category}</b></div></header><h2>{product.name}</h2><p>{product.supplier}<small>{product.region}</small></p>
-          <dl><div><dt>规格</dt><dd>{product.spec}</dd></div><div><dt>起订量</dt><dd>{product.minOrder}</dd></div><div><dt>参考价</dt><dd className="price">{product.price}</dd></div><div><dt>供应能力</dt><dd>{product.supply}</dd></div></dl>
-          <footer><button type="button" onClick={() => navigate(`/products/${product.id}`)}>查看商品</button><button type="button" onClick={() => navigate(`/procurement/${product.id}/quote`)}>立即询价 <ChevronRight/></button></footer>
+          <div className="industry-product-image"><img src={product.image} alt={product.name}/><span><Icon/>平台认证</span></div>
+          <div className="industry-product-content">
+            <header><span><Icon/></span><div><em>{selectedSection?.name}</em><b>{product.category}</b></div></header><h2>{product.name}</h2><p>{product.supplier}<small>{product.region}</small></p>
+            <dl><div><dt>规格</dt><dd>{product.spec}</dd></div><div><dt>起订量</dt><dd>{product.minOrder}</dd></div><div><dt>参考价</dt><dd className="price">{product.price}</dd></div><div><dt>供应能力</dt><dd>{product.supply}</dd></div></dl>
+            <footer><button type="button" onClick={() => navigate(`/products/${product.id}`)}>查看商品</button><button type="button" onClick={() => navigate(`/procurement/${product.id}/quote`)}>立即询价 <ChevronRight/></button></footer>
+          </div>
         </article> })}
       </section>
       {products.length === 0 && <div className="industry-products-empty">没有找到匹配商品，请更换关键词或商品分区。</div>}
