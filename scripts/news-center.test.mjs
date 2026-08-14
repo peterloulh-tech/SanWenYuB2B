@@ -22,7 +22,7 @@ test('行业资讯收录壹渔业最近二十篇并按发布日期倒序排列',
   const industryItems = newsCenterData.filterNewsItems('industry-news')
 
   assert.equal(industryItems.length, 20)
-  assert.equal(newsCenterData.filterNewsItems('all').length, 20)
+  assert.equal(newsCenterData.filterNewsItems('all').length, 30)
   assert.equal(industryItems[0].title, '17家船厂竞标，最终花落中国！两艘活鱼运输船敲定')
   assert.equal(industryItems[0].publishedAt, '2026-08-12')
   assert.equal(industryItems.at(-1).title, '回血1600万，国联水产出售湖北加工厂盘活资产')
@@ -38,6 +38,30 @@ test('行业资讯收录壹渔业最近二十篇并按发布日期倒序排列',
   )
   assert.deepEqual(newsCenterData.filterNewsItems('local-policy'), [])
   assert.equal(newsCenterData.findNewsItem('not-found'), null)
+})
+
+test('国家政策与时事新闻各收录五篇已标注来源的有效内容', () => {
+  assert.ok(newsCenterData, '需要提供资讯中心数据模块')
+  const policyItems = newsCenterData.filterNewsItems('national-policy')
+  const currentItems = newsCenterData.filterNewsItems('current-affairs')
+
+  assert.equal(policyItems.length, 5)
+  assert.equal(currentItems.length, 5)
+  assert.equal(policyItems[0].publishedAt, '2026-05-22')
+  assert.equal(currentItems[0].publishedAt, '2026-07-24')
+  assert.ok([...policyItems, ...currentItems].every(item => item.publisher.length > 2))
+  assert.ok([...policyItems, ...currentItems].every(item => item.summary.length > 20))
+  assert.ok([...policyItems, ...currentItems].every(item => item.tags.length >= 2))
+  assert.ok([...policyItems, ...currentItems].every(item => item.sourceUrl.startsWith('https://')))
+  assert.equal(new Set([...policyItems, ...currentItems].map(item => item.sourceUrl)).size, 10)
+  assert.deepEqual(
+    policyItems.map(item => item.publishedAt),
+    [...policyItems].map(item => item.publishedAt).sort().reverse(),
+  )
+  assert.deepEqual(
+    currentItems.map(item => item.publishedAt),
+    [...currentItems].map(item => item.publishedAt).sort().reverse(),
+  )
 })
 
 test('资讯列表按每页六篇分页并正确处理最后一页', () => {
@@ -66,6 +90,29 @@ test('资讯列表按每页六篇分页并正确处理最后一页', () => {
     totalItems: 20,
     totalPages: 4,
     itemCount: 2,
+  })
+})
+
+test('综合资讯三十篇按日期排列并分为五页', () => {
+  assert.ok(newsCenterData, '需要提供资讯中心数据模块')
+  const allItems = newsCenterData.filterNewsItems('all')
+  const lastPage = newsCenterData.paginateNewsItems('all', 5, 6)
+
+  assert.equal(allItems.length, 30)
+  assert.deepEqual(
+    allItems.map(item => item.publishedAt),
+    [...allItems].map(item => item.publishedAt).sort().reverse(),
+  )
+  assert.deepEqual({
+    page: lastPage.page,
+    totalItems: lastPage.totalItems,
+    totalPages: lastPage.totalPages,
+    itemCount: lastPage.items.length,
+  }, {
+    page: 5,
+    totalItems: 30,
+    totalPages: 5,
+    itemCount: 6,
   })
 })
 
