@@ -1,11 +1,17 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ChevronRight, CookingPot, Fish, Search, Shell, Sprout } from 'lucide-react'
+import { ChevronRight, Search } from 'lucide-react'
+import EnterpriseSectionCards from '../components/business/EnterpriseSectionCards'
 import { enterpriseProductSections, filterIndustryProducts, industryProducts } from '../data/industryProducts'
 import '../styles/industry-products.css'
 
-const sectionIcons = { fresh: Fish, aquaculture: Sprout, processed: CookingPot, seafood: Shell }
 const validSections = new Set(enterpriseProductSections.map(({ id }) => id))
+const productCounts = Object.fromEntries(
+  enterpriseProductSections.map(({ id }) => [
+    id,
+    industryProducts.filter((product) => product.section === id).length,
+  ]),
+)
 
 export default function IndustryProductsPage() {
   const navigate = useNavigate()
@@ -31,9 +37,13 @@ export default function IndustryProductsPage() {
       </div>
     </section>
     <div className="page-container industry-products-body">
-      <section className="industry-stage-grid" aria-label="商品分区筛选">
-        {enterpriseProductSections.map((item) => { const Icon = sectionIcons[item.id]; const count = industryProducts.filter((product) => product.section === item.id).length; return <button type="button" className={section === item.id ? 'active' : ''} onClick={() => selectSection(item.id)} key={item.id}><span><Icon/></span><div><b>{item.name}</b><small>{item.description}</small></div><em>{count} 类</em></button> })}
-      </section>
+      <EnterpriseSectionCards
+        selectedSection={section}
+        counts={productCounts}
+        countUnit="类"
+        onSelect={selectSection}
+        ariaLabel="商品分区筛选"
+      />
       <section className="industry-products-heading"><div><h2>{selectedSection?.name}</h2><span>共 {products.length} 项静态演示商品</span></div><p>企业采购价仅作展示，实际价格以询价为准</p></section>
       <section className="industry-products-grid">
         {products.map((product) => <article key={product.id}>

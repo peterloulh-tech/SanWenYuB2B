@@ -79,6 +79,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px 12px;
+  margin-top: 8px;
 }
 
 .supplier-enterprise-card {
@@ -163,7 +164,19 @@
   font-weight: 900;
 }
 
-.supplier-products > div {
+.supplier-products-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.supplier-products-heading > span {
+  color: #6d7e97;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.supplier-product-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -178,6 +191,16 @@
   font-size: 13px;
   font-weight: 700;
   line-height: 1.3;
+  white-space: nowrap;
+}
+
+.supplier-products > p {
+  overflow: hidden;
+  margin-top: 6px;
+  color: #60718d;
+  font-size: 12px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -203,7 +226,7 @@
 
 .supplier-empty {
   display: grid;
-  min-height: 450px;
+  min-height: 440px;
   place-content: center;
   justify-items: center;
   color: #6d7e97;

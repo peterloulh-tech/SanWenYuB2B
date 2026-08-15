@@ -1,34 +1,19 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BadgeCheck, Building2, MapPin, Search } from 'lucide-react'
+import EnterpriseSectionCards from '../components/business/EnterpriseSectionCards'
 import PageHero from '../components/ui/PageHero'
-import { suppliers } from '../data/mockData'
+import { filterSupplierDirectory, supplierCounts } from '../data/supplierDirectory'
 import '../styles/suppliers-page.css'
-
-const supplierCities = ['日照', '威海', '青岛', '大连', '日照', '烟台']
-const supplierProducts = ['冰鲜整鱼', '冷冻整鱼', '三文鱼柳', '精加工切片']
-const supplierProfiles = suppliers.map((name, index) => ({
-  id: index + 1,
-  name,
-  region: `山东省 · ${supplierCities[index]}`,
-  products: supplierProducts,
-}))
 
 export default function SuppliersPage() {
   const navigate = useNavigate()
+  const [section, setSection] = useState('fresh')
   const [keyword, setKeyword] = useState('')
 
   const filteredSuppliers = useMemo(() => {
-    const normalizedKeyword = keyword.trim().toLowerCase()
-    if (!normalizedKeyword) return supplierProfiles
-
-    return supplierProfiles.filter((supplier) => (
-      [supplier.name, supplier.region, ...supplier.products]
-        .join(' ')
-        .toLowerCase()
-        .includes(normalizedKeyword)
-    ))
-  }, [keyword])
+    return filterSupplierDirectory({ section, keyword })
+  }, [keyword, section])
 
   function submitSearch(event) {
     event.preventDefault()
@@ -47,7 +32,7 @@ export default function SuppliersPage() {
           event.preventDefault()
           setKeyword(event.currentTarget.value)
         }}
-        placeholder="搜索供应商名称、地区或主营产品"
+        placeholder="搜索当前分类的企业、地区或主营产品"
       />
     </label>
     <button type="submit">搜索</button>
@@ -62,6 +47,14 @@ export default function SuppliersPage() {
     />
 
     <main className="page-container suppliers-body">
+      <EnterpriseSectionCards
+        selectedSection={section}
+        counts={supplierCounts}
+        countUnit="家"
+        onSelect={setSection}
+        ariaLabel="供应商分类筛选"
+      />
+
       <section className="supplier-enterprise-grid" aria-live="polite">
         {filteredSuppliers.map((supplier) => <article className="supplier-enterprise-card" key={supplier.id}>
           <header>
@@ -76,8 +69,14 @@ export default function SuppliersPage() {
           </header>
 
           <div className="supplier-products">
-            <h3>主营产品</h3>
-            <div>{supplier.products.map((product) => <span key={product}>{product}</span>)}</div>
+            <div className="supplier-products-heading">
+              <h3>主营品类</h3>
+              <span>{supplier.productCount} 项演示商品</span>
+            </div>
+            <div className="supplier-product-tags">
+              {supplier.categories.map((category) => <span key={category}>{category}</span>)}
+            </div>
+            <p>代表商品：{supplier.productNames.join('、')}</p>
           </div>
 
           <footer>
@@ -89,7 +88,7 @@ export default function SuppliersPage() {
       {filteredSuppliers.length === 0 && <div className="supplier-empty">
         <Search />
         <h2>未找到匹配供应商</h2>
-        <p>请更换企业名称、地区或主营产品关键词。</p>
+        <p>请更换关键词或切换供应商分类。</p>
       </div>}
     </main>
   </div>
