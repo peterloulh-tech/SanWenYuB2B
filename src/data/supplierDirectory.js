@@ -39,11 +39,37 @@ export const supplierCounts = Object.fromEntries(
   ]),
 )
 
-export function filterSupplierDirectory({ section = 'fresh', keyword = '' } = {}) {
-  const normalizedKeyword = keyword.trim().toLowerCase()
+export function mergeSupplierDirectory(entries = supplierDirectory) {
+  const merged = new Map()
 
-  return supplierDirectory.filter((supplier) => {
-    if (supplier.section !== section) return false
+  entries.forEach((supplier) => {
+    const current = merged.get(supplier.id) || {
+      ...supplier,
+      section: 'all',
+      categories: [],
+      productNames: [],
+    }
+
+    supplier.categories.forEach((category) => {
+      if (!current.categories.includes(category)) current.categories.push(category)
+    })
+    supplier.productNames.forEach((productName) => {
+      if (!current.productNames.includes(productName)) current.productNames.push(productName)
+    })
+    current.productCount = current.productNames.length
+    merged.set(supplier.id, current)
+  })
+
+  return [...merged.values()]
+}
+
+export function filterSupplierDirectory({ section = 'all', keyword = '' } = {}) {
+  const normalizedKeyword = keyword.trim().toLowerCase()
+  const directory = section === 'all'
+    ? mergeSupplierDirectory()
+    : supplierDirectory.filter((supplier) => supplier.section === section)
+
+  return directory.filter((supplier) => {
     if (!normalizedKeyword) return true
 
     const searchable = [

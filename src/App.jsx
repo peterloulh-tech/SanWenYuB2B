@@ -28,6 +28,7 @@ import IndustryServiceDetailPage from './pages/IndustryServiceDetailPage'
 import ServiceRequestSuccessPage from './pages/ServiceRequestSuccessPage'
 import NewsCenterPage from './pages/NewsCenterPage'
 import NewsDetailPage from './pages/NewsDetailPage'
+import ProcurementPublishPage from './pages/ProcurementPublishPage'
 
 export default function App() {
   return <Routes>
@@ -57,7 +58,7 @@ export default function App() {
       <Route path="help" element={<HelpPage />} />
       <Route path="login" element={<ActionPage type="login" />} />
       <Route path="register" element={<ActionPage type="register" />} />
-      <Route path="procurement/new" element={<ActionPage type="publish" />} />
+      <Route path="procurement/new" element={<ProcurementPublishPage />} />
       <Route path="procurement/:id/quote" element={<ActionPage type="quote" />} />
       <Route path="orders/:id" element={<ActionPage type="order" />} />
       <Route path="suppliers/:id" element={<ActionPage type="supplier" />} />

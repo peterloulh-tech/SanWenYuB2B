@@ -8,16 +8,17 @@
     "check:assets": "node scripts/check-static-assets.mjs",
     "test": "node --test scripts/*.test.mjs",
     "build": "pnpm check:assets && vite build",
+    "build:pages": "GITHUB_PAGES=true pnpm build && node scripts/prepare-github-pages.mjs",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "@tailwindcss/vite": "latest",
+    "echarts": "^6.1.0",
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
     "tailwindcss": "latest",
     "vite": "latest"
-  },
-  "devDependencies": {}
+  }
 }

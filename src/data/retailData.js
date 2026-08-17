@@ -155,3 +155,16 @@ export function findRetailProduct(id) {
 export function findRetailCategory(id) {
   return retailCategories.find(category => category.id === id) ?? null
 }
+
+export function filterRetailProducts(products = retailProducts, { category = 'all', keyword = '' } = {}) {
+  const normalizedKeyword = keyword.trim().toLowerCase()
+
+  return products.filter((product) => {
+    if (category !== 'all' && product.category !== category) return false
+    if (!normalizedKeyword) return true
+
+    const categoryName = findRetailCategory(product.category)?.name || ''
+    const searchable = [product.name, categoryName, product.spec, product.badge, product.origin].join(' ').toLowerCase()
+    return searchable.includes(normalizedKeyword)
+  })
+}

@@ -2,39 +2,42 @@ import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BadgeCheck, Building2, MapPin, Search } from 'lucide-react'
 import EnterpriseSectionCards from '../components/business/EnterpriseSectionCards'
+import SiliconAssistant from '../components/ai/SiliconAssistant'
 import PageHero from '../components/ui/PageHero'
 import { filterSupplierDirectory, supplierCounts } from '../data/supplierDirectory'
+import { normalizeVoiceSearchText } from '../features/voice/voiceSearch'
 import '../styles/suppliers-page.css'
 
 export default function SuppliersPage() {
   const navigate = useNavigate()
-  const [section, setSection] = useState('fresh')
+  const [section, setSection] = useState('all')
+  const [keywordInput, setKeywordInput] = useState('')
   const [keyword, setKeyword] = useState('')
 
   const filteredSuppliers = useMemo(() => {
     return filterSupplierDirectory({ section, keyword })
   }, [keyword, section])
 
-  function submitSearch(event) {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    setKeyword(String(formData.get('keyword') || ''))
+  function executeSearch(value = keywordInput) {
+    const normalizedKeyword = normalizeVoiceSearchText(value)
+    setKeywordInput(normalizedKeyword)
+    setKeyword(normalizedKeyword)
+    setSection('all')
   }
 
-  const searchAction = <form className="supplier-hero-search" onSubmit={submitSearch}>
-    <label>
-      <Search />
-      <input
-        aria-label="搜索供应商"
-        name="keyword"
-        onKeyDown={(event) => {
-          if (event.key !== 'Enter') return
-          event.preventDefault()
-          setKeyword(event.currentTarget.value)
-        }}
-        placeholder="搜索当前分类的企业、地区或主营产品"
-      />
-    </label>
+  function submitSearch(event) {
+    event.preventDefault()
+    executeSearch()
+  }
+
+  const searchAction = <form className="supplier-hero-search platform-search" onSubmit={submitSearch}>
+    <Search />
+    <input
+      aria-label="搜索供应商"
+      value={keywordInput}
+      onChange={(event) => setKeywordInput(event.target.value)}
+      placeholder="搜索企业、地区、主营品类或代表商品"
+    />
     <button type="submit">搜索</button>
   </form>
 
@@ -51,7 +54,7 @@ export default function SuppliersPage() {
         selectedSection={section}
         counts={supplierCounts}
         countUnit="家"
-        onSelect={setSection}
+        onSelect={(nextSection) => setSection(section === nextSection ? 'all' : nextSection)}
         ariaLabel="供应商分类筛选"
       />
 
@@ -91,5 +94,6 @@ export default function SuppliersPage() {
         <p>请更换关键词或切换供应商分类。</p>
       </div>}
     </main>
+    <SiliconAssistant onSearch={executeSearch}/>
   </div>
 }

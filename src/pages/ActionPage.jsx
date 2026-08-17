@@ -5,7 +5,6 @@ import PageHero from '../components/ui/PageHero'
 const config = {
   login: ['用户登录','登录后管理采购、报价和订单',KeyRound,['手机号','登录密码'],'登录'],
   register: ['企业用户注册','完成注册后提交企业认证',UserPlus,['企业名称','联系人','手机号'],'提交注册'],
-  publish: ['发布采购需求','填写需求后等待认证供应商报价',ClipboardCheck,['采购品类','需求数量','交付城市','截止日期'],'发布需求'],
   quote: ['提交供应报价','根据采购需求填写价格和履约信息',BadgeCheck,['报价单价','可供数量','交付日期','补充说明'],'提交报价'],
   order: ['订单详情','查看交易信息与履约进度',ClipboardCheck,[], '返回订单中心'],
   supplier: ['供应商企业主页','平台认证供应商信息',Building2,[], '返回供应商列表'],

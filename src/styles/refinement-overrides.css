@@ -2,6 +2,7 @@
   --platform-ink: #00015f;
   --platform-muted: #434973;
   --platform-blue: #0051fe;
+  --platform-search-border: #1667f3;
 }
 
 body { color: var(--platform-ink); }
@@ -14,6 +15,130 @@ a, button { transition: color .18s ease, background-color .18s ease, border-colo
   background: var(--platform-blue);
 }
 .nav-new { background: #ff563d; }
+
+/* 全站 PC 搜索栏：输入区与搜索按钮共用一个连体外框。 */
+.platform-search {
+  --platform-search-button-width: 84px;
+  display: flex;
+  min-width: 0;
+  height: 45px;
+  align-items: center;
+  overflow: hidden;
+  border: 1.5px solid var(--platform-search-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .96);
+  color: #8090aa;
+  box-shadow: 0 8px 22px #226ec51a;
+}
+.platform-search:focus-within {
+  border-color: var(--platform-blue);
+  box-shadow: 0 0 0 3px #075df51d, 0 8px 22px #226ec51a;
+}
+.platform-search > svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin: 0 13px;
+  color: #7d8fa8;
+}
+.platform-search > input {
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #10285e;
+  font-size: 15px;
+}
+.platform-search > button {
+  display: flex;
+  width: var(--platform-search-button-width);
+  height: 100%;
+  flex: 0 0 var(--platform-search-button-width);
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  border: 0;
+  border-left: 1px solid var(--platform-search-border);
+  border-radius: 0;
+  background: var(--platform-blue);
+  padding: 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.platform-search > button:focus-visible {
+  outline: 2px solid #ff8a3d;
+  outline-offset: -3px;
+}
+
+/* 首页白色输入区的右边界与标题右边缘对齐，搜索按钮继续向右伸出。 */
+.hero-search-stack {
+  display: grid;
+  width: max-content;
+  grid-template-columns: max-content var(--platform-search-button-width, 84px);
+}
+.hero-search-stack > h1,
+.hero-search-stack > p { grid-column: 1; }
+.hero-search-stack > p {
+  margin-top: 6px;
+  color: #14346d;
+  font-size: 19px;
+}
+.hero-search-stack > .hero-search {
+  width: 100%;
+  grid-column: 1 / 3;
+}
+
+.industry-products-search > .platform-search {
+  width: 524px;
+  flex: 0 1 524px;
+}
+.industry-hero-actions > .platform-search {
+  width: 544px;
+  flex: 0 1 544px;
+}
+.supplier-hero-search.platform-search {
+  width: 566px;
+  flex: 0 1 566px;
+  gap: 0;
+}
+.tp-demand-filters > .platform-search {
+  width: 100%;
+}
+.section-card > header .list-search.compact.platform-search {
+  width: 380px;
+  height: 45px;
+  flex: 0 0 380px;
+}
+.retail-search.platform-search { height: 45px; }
+
+.industry-products-search > .platform-search > button,
+.industry-hero-actions > .platform-search > button {
+  display: flex;
+  width: var(--platform-search-button-width);
+  height: 100%;
+  flex: 0 0 var(--platform-search-button-width);
+  align-items: center;
+  justify-content: center;
+  margin-left: 0;
+  border: 0;
+  border-left: 1px solid var(--platform-search-border);
+  border-radius: 0;
+  background: var(--platform-blue);
+  padding: 0;
+  color: #fff;
+  font-size: 16px;
+  box-shadow: none;
+}
+
+@media (max-width: 1420px) {
+  .industry-products-search > .platform-search { width: 460px; flex-basis: 460px; }
+  .industry-hero-actions > .platform-search { width: 500px; flex-basis: 500px; }
+  .supplier-hero-search.platform-search { width: 506px; flex-basis: 506px; }
+}
 .tp-page, .finance-page, .market-page, .order-fulfillment-page { color: var(--platform-ink); }
 .tp-title-row p, .tp-confirm-title p, .tp-good-body p, .tp-demand-name p,
 .finance-copy > p:last-of-type, .finance-desc, .finance-product-card header p,
@@ -46,7 +171,28 @@ a, button { transition: color .18s ease, background-color .18s ease, border-colo
 .quick-actions .action-card .text-left { text-align: left; }
 .quick-actions .action-card b,
 .quick-actions .action-card small { display: block; }
+.quick-actions .action-card b { font-size: 18px; line-height: 22px; }
+.quick-actions .action-card small { margin-top: 2px; font-size: 14.8px; line-height: 17px; }
+.quick-actions .action-card .text-left { min-width: 0; }
+.quick-actions .action-icon.original-image {
+  overflow: hidden;
+  flex: 0 0 50px;
+  background: transparent;
+  box-shadow: none;
+}
+.quick-actions .action-icon.original-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .quick-actions .action-card > svg:last-child { position: absolute; right: 17px; top: 50%; transform: translateY(-50%); }
+
+.home-stats .home-stat-icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  object-fit: cover;
+}
 
 /* 全站按钮稍收紧，统一主题蓝。 */
 .tp-primary, .tp-outline, .primary-large, .secondary-large { height: 40px; }

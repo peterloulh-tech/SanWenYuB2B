@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { Building2, Check, ChevronDown, ShoppingBag, UserRound } from 'lucide-react'
+import { useState } from 'react'
+import { Building2, ShoppingBag } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   ACCOUNT_STATES,
@@ -11,12 +11,10 @@ import {
 const identityMeta = {
   [IDENTITIES.ENTERPRISE]: {
     label: '企业交易',
-    description: '批量采购、供应报价、发布需求',
     Icon: Building2,
   },
   [IDENTITIES.PERSONAL]: {
     label: '个人消费',
-    description: '家庭购买、小包装、购物车',
     Icon: ShoppingBag,
   },
 }
@@ -37,75 +35,45 @@ const actionCopy = {
 export default function IdentitySwitcher({ accountState = ACCOUNT_STATES.GUEST }) {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const routeIdentity = pathname.startsWith('/retail') ? IDENTITIES.PERSONAL : IDENTITIES.ENTERPRISE
-  const [identity, setIdentity] = useState(routeIdentity)
-  const [open, setOpen] = useState(false)
+  const identity = pathname.startsWith('/retail') ? IDENTITIES.PERSONAL : IDENTITIES.ENTERPRISE
   const [pendingAction, setPendingAction] = useState(null)
-  const rootRef = useRef(null)
-  const identityLabel = identityMeta[identity].label
-
-  useEffect(() => {
-    setIdentity(routeIdentity)
-  }, [routeIdentity])
-
-  useEffect(() => {
-    const closeOnOutsideClick = (event) => {
-      if (!rootRef.current?.contains(event.target)) setOpen(false)
-    }
-    document.addEventListener('mousedown', closeOnOutsideClick)
-    return () => document.removeEventListener('mousedown', closeOnOutsideClick)
-  }, [])
 
   const chooseIdentity = (targetIdentity) => {
+    if (targetIdentity === identity) return
+
     const result = getIdentitySwitchResult(accountState, targetIdentity)
     if (result.action === 'switch') {
-      setIdentity(result.targetIdentity)
-      setOpen(false)
       navigate(getIdentityLandingPath(result.targetIdentity))
       return
     }
     setPendingAction(result)
-    setOpen(false)
   }
 
   const confirmPendingAction = () => {
     if (pendingAction?.action === 'open-personal') {
-      setIdentity(IDENTITIES.PERSONAL)
       navigate(getIdentityLandingPath(IDENTITIES.PERSONAL))
     }
     setPendingAction(null)
   }
 
-  return <div className="identity-switcher" ref={rootRef}>
-    <button
-      type="button"
-      className={`identity-switcher-trigger ${open ? 'open' : ''}`}
-      aria-expanded={open}
-      aria-haspopup="menu"
-      onClick={() => setOpen(value => !value)}
-    >
-      <UserRound />
-      <span>当前：{identityLabel}</span>
-      <ChevronDown />
-    </button>
-
-    {open && <div className="identity-menu" role="menu">
+  return <>
+    <div className="identity-switcher" role="group" aria-label="业务频道">
       {Object.entries(identityMeta).map(([value, meta]) => {
         const selected = identity === value
         const Icon = meta.Icon
         return <button
           type="button"
-          role="menuitem"
-          className={selected ? 'selected' : ''}
+          className={`identity-channel ${selected ? 'selected' : ''}`}
           key={value}
+          aria-pressed={selected}
+          aria-label={`${meta.label}${selected ? '，当前频道' : ''}`}
           onClick={() => chooseIdentity(value)}
         >
-          <span className="identity-menu-icon"><Icon /></span>
-          <span><b>{meta.label}</b><small>{meta.description}</small></span>
-          {selected && <Check className="identity-menu-check" />}
+          <Icon />
+          <span>{meta.label}</span>
         </button>
       })}
-    </div>}
+    </div>
 
     {pendingAction && <div className="identity-dialog-backdrop" role="presentation">
       <section className="identity-dialog" role="dialog" aria-modal="true" aria-labelledby="identity-dialog-title">
@@ -117,5 +85,5 @@ export default function IdentitySwitcher({ accountState = ACCOUNT_STATES.GUEST }
         </div>
       </section>
     </div>}
-  </div>
+  </>
 }

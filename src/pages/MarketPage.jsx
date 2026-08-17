@@ -1,21 +1,72 @@
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BarChart3, Box, ChevronRight, Flame, Lightbulb, MapPin, Scale, ShieldCheck, ShoppingCart, Waves } from 'lucide-react'
-import { marketDemoChartDates, marketDemoMeta } from '../data/marketData'
+import { BarChart3, Box, ChevronRight, Lightbulb, Megaphone, Scale, ShoppingCart, SlidersHorizontal, Waves } from 'lucide-react'
+import LinkedSelect from '../components/ui/LinkedSelect'
+import { defaultMarketFilters, getMarketSnapshot, getMarketTrend, marketDemoDateRange, marketDemoMeta, marketFilterOptions, marketPeriodOptions, marketProcurementTicker } from '../data/marketData'
 import '../styles/service-pages.css'
 
-const chartPoints = '0,104 35,102 70,106 105,98 140,102 175,96 210,100 245,96 280,102 315,91 350,96 385,89 420,68 455,63 490,75 525,80 560,76 595,60 630,71 665,61 700,54 735,72 770,52 805,43 840,56 875,61 910,36 945,44 980,32 1015,39 1050,24 1085,36 1120,30 1155,24'
-const demands = [['3~4kg/尾','需求68吨','12条采购需求','¥152/kg','需求旺盛 ↑'],['4~5kg/尾','需求46吨','8条采购需求','¥158/kg','需求稳定'],['5kg+/尾','需求21吨','4条采购需求','¥166/kg','需求平稳']]
-const cities = [['上海','采购需求38吨','¥153.6/kg','需求活跃 ↑'],['北京','采购需求26吨','¥155.2/kg','需求稳定'],['广州','采购需求22吨','¥151.8/kg','需求平稳'],['深圳','采购需求18吨','¥152.5/kg','需求平稳']]
+function signed(value) {
+  return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`
+}
 
-function RankRows({ rows, orange=false }) { return <div className="market-ranks">{rows.map((r,i)=><div key={r[0]}><b className={orange?'orange':''}>{i+1}</b><strong>{r[0]}</strong><span><ShoppingCart />{r[1]}</span>{r.length===5&&<span><ShoppingCart />{r[2]}</span>}<em>{r[r.length-2]}</em><i className={i===0?'hot':''}>{r[r.length-1]}</i></div>)}</div> }
+const PriceTrendChart = lazy(() => import('../components/market/PriceTrendChart'))
 
-export default function MarketPage(){ const nav=useNavigate(); return <main className="market-page">
-  <section className="market-heading"><div className="page-container"><p className="service-crumb">首页 <ChevronRight /> 市场行情</p><h1>市场行情中心 <em className="market-demo-label">{marketDemoMeta.label}</em></h1><span>掌握价格变化，了解市场需求方向</span><dl className="market-demo-meta"><div><dt>地区</dt><dd>{marketDemoMeta.region}</dd></div><div><dt>品类</dt><dd>{marketDemoMeta.category}</dd></div><div><dt>规格</dt><dd>{marketDemoMeta.specification}</dd></div><div><dt>单位</dt><dd>{marketDemoMeta.unit}</dd></div><div><dt>数据日期</dt><dd>{marketDemoMeta.dataDate}</dd></div></dl></div><Waves/></section>
-  <div className="page-container market-board">
-    <section className="market-summary market-card"><header><BarChart3/><h2>今日市场</h2></header><div className="market-summary-values"><div><span>今日均价</span><strong>¥153.2<small>/kg</small></strong><em>↑ 2.1%</em></div><div><span>今日成交量</span><strong className="blue">186.5<small>吨</small></strong></div><div><span>今日采购需求</span><strong className="blue">32<small>条</small></strong></div></div><div className="market-tip"><Lightbulb/><p><b>市场提示：</b>冰鲜3~4kg需求较活跃，上海、北京采购较多。</p><button onClick={()=>nav('/procurement')}>查看采购大厅</button></div></section>
-    <section className="market-chart market-card"><header><BarChart3/><h2>近30日成交价格走势</h2></header><div className="market-controls"><div><button className="active">冰鲜整鱼</button><button>冷冻整鱼</button><button>鱼柳</button></div><div><button>7日</button><button className="active">30日</button><button>90日</button></div></div><div className="market-line-wrap"><span className="y-title">价格（元/kg）</span><div className="market-y"><span>170</span><span>160</span><span>150</span><span>140</span><span>130</span></div><svg viewBox="0 0 1155 135" preserveAspectRatio="none"><defs><linearGradient id="marketArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#1470ff" stopOpacity=".23"/><stop offset="1" stopColor="#1470ff" stopOpacity="0"/></linearGradient></defs><polygon points={`${chartPoints} 1155,135 0,135`} fill="url(#marketArea)"/><polyline points={chartPoints}/><circle cx="1155" cy="24" r="5"/></svg><div className="market-x">{marketDemoChartDates.map(date => <span key={date}>{date}</span>)}</div></div><footer><span>当前均价 <b>¥153.2/kg</b></span><span>近30日 <b>+4.6%</b></span></footer></section>
-    <section className="market-card market-demand"><header><Flame/><h2>热门需求方向</h2></header><RankRows rows={demands} orange/><button className="market-detail" onClick={()=>nav('/procurement')}>查看详细采购需求 <ChevronRight /></button></section>
-    <section className="market-card market-regions"><header><MapPin/><h2>热门采购地区</h2></header><RankRows rows={cities}/></section>
-    <section className="market-card market-supply"><header><Scale/><h2>市场供需</h2></header><div className="market-supply-values"><div><span><ShoppingCart/></span><p>采购需求总量<strong>186<small>吨</small></strong></p></div><div><span><Box/></span><p>平台现货供应<strong>235<small>吨</small></strong></p></div><div><span><BarChart3/></span><p>今日新增需求<strong>32<small>条</small></strong></p></div></div><footer><ShieldCheck/>当前状态：整体平稳，<b>冰鲜3~4kg需求偏旺</b></footer></section>
-  </div>
- </main> }
+export default function MarketPage() {
+  const navigate = useNavigate()
+  const filterRef = useRef(null)
+  const [filters, setFilters] = useState(defaultMarketFilters)
+  const [dataDate, setDataDate] = useState(marketDemoDateRange.max)
+  const [period, setPeriod] = useState(30)
+  const [openFilter, setOpenFilter] = useState(null)
+  const snapshot = useMemo(() => getMarketSnapshot(filters, dataDate), [filters, dataDate])
+  const trend = useMemo(() => getMarketTrend(filters, period), [filters, period])
+
+  useEffect(() => {
+    if (!openFilter) return undefined
+    const closeMenu = (event) => {
+      if (!filterRef.current?.contains(event.target)) setOpenFilter(null)
+    }
+    document.addEventListener('pointerdown', closeMenu)
+    return () => document.removeEventListener('pointerdown', closeMenu)
+  }, [openFilter])
+
+  const selectFilter = (group, value) => {
+    setFilters((current) => ({ ...current, [group]: value }))
+    setOpenFilter(null)
+  }
+
+  const resetFilters = () => {
+    setFilters(defaultMarketFilters)
+    setDataDate(marketDemoDateRange.max)
+    setPeriod(30)
+    setOpenFilter(null)
+  }
+
+  return <main className="market-page">
+    <section className="market-heading"><div className="page-container"><p className="service-crumb">首页 <ChevronRight /> 市场行情</p><h1>市场行情中心 <em className="market-demo-label">{marketDemoMeta.label}</em></h1><span>掌握价格变化，了解市场需求方向</span></div><Waves /></section>
+    <div className="page-container market-board">
+      <section className="market-filter market-card" ref={filterRef}>
+        <header><SlidersHorizontal /><h2>行情筛选</h2></header>
+        {[
+          ['species', '品种'],
+          ['origin', '产品产地'],
+          ['productForm', '产品形态'],
+        ].map(([group, label]) => <LinkedSelect id={`market-filter-${group}`} label={label} options={marketFilterOptions[group]} value={filters[group]} open={openFilter === group} onToggle={(force) => setOpenFilter(force === false ? null : openFilter === group ? null : group)} onSelect={(value) => selectFilter(group, value)} key={group} />)}
+        <label className="market-filter-date" htmlFor="market-data-date"><span>数据日期</span><input id="market-data-date" type="date" min={marketDemoDateRange.min} max={marketDemoDateRange.max} value={dataDate} onChange={(event) => setDataDate(event.target.value)} /></label>
+        <button type="button" className="market-reset" onClick={resetFilters}>重置筛选</button>
+      </section>
+
+      <section className="market-summary market-card"><header><BarChart3 /><h2>当日市场</h2></header><div className="market-summary-values"><div><span>当日均价</span><strong>¥{snapshot.price.toFixed(1)}<small>/kg</small></strong><em className={snapshot.dailyChange < 0 ? 'down' : ''}>{signed(snapshot.dailyChange)}</em></div><div><span>当日成交量</span><strong className="blue">{snapshot.volume.toFixed(1)}<small>吨</small></strong></div><div><span>当日采购需求</span><strong className="blue">{snapshot.demandCount}<small>条</small></strong></div></div><div className="market-tip"><Lightbulb /><p><b>市场提示</b>{snapshot.tip}</p><button onClick={() => navigate('/procurement')}>查看采购大厅</button></div></section>
+
+      <section className="market-chart market-card"><header><BarChart3 /><h2>近{period}日成交价格走势</h2><div className="market-periods" aria-label="走势图时间范围">{marketPeriodOptions.map((option) => <button type="button" className={period === option ? 'active' : ''} aria-pressed={period === option} onClick={() => setPeriod(option)} key={option}>{option}日</button>)}</div></header><Suspense fallback={<div className="market-echart" role="status" aria-label="成交价格走势图加载中" />}><PriceTrendChart points={trend.points} period={period} /></Suspense></section>
+
+      <section className="market-card market-supply">
+        <div className="market-ticker" role="region" aria-label="平台演示采购需求滚动快讯">
+          <div className="market-ticker-label"><Megaphone /><b>采购快讯</b><em>演示数据</em></div>
+          <div className="market-ticker-viewport"><div className="market-ticker-track">{[false, true].map((duplicate) => <div className="market-ticker-group" aria-hidden={duplicate} key={String(duplicate)}>{marketProcurementTicker.map((item) => <span key={`${duplicate}-${item.id}`}><strong>{item.product}</strong> {item.quantity} · {item.destination}交付 · {item.delivery}</span>)}</div>)}</div></div>
+        </div>
+        <div className="market-supply-main"><header><Scale /><h2>全平台市场供需</h2></header><div className="market-supply-values"><div><span><ShoppingCart /></span><p><b>采购需求总量：</b><strong>186<small>吨</small></strong></p></div><div><span><Box /></span><p><b>平台现货供应：</b><strong>235<small>吨</small></strong></p></div><div><span><BarChart3 /></span><p><b>当日新增需求：</b><strong>32<small>条</small></strong></p></div></div></div>
+      </section>
+    </div>
+  </main>
+}
