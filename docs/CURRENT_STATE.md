@@ -90,7 +90,7 @@
 ## Git 与注意事项
 
 - 当前分支：`main`；准确提交位置以 `git log -5 --oneline --decorate` 为准。
-- 源码远程 `origin/main` 仍停留在 `38d563b`，继续禁止未授权推送。本次仅按用户明确授权将生产构建产物发布到独立公开仓库 `peterloulh-tech/SanWenYuB2B`；后续更新仍需用户明确授权。
+- 用户仓库 `peterloulh-tech/SanWenYuB2B` 是唯一默认推送目标：远端 `main` 保存 GitHub Pages 生产构建产物，远端 `source` 保存完整源码和 Git 历史。原始源码仓库 `singleMen/salmon-digital-platform` 仅作为只读 `upstream`，已恢复到误推前的 `38d563b`，后续不得向其推送。任何远端更新仍需用户明确授权。
 - 当前均为静态演示数据，不代表真实成交、库存、支付或金融审批结果。
 - `projectFiles/` 中的 PPT 和 UI 原稿被 Git 忽略，只存在本地。
 - `SALMONDIGITA-1`～`4`、`6`～`8`、`10`～`23` 已完成用户验收；`SALMONDIGITA-5` 正在等待用户验收，`SALMONDIGITA-9` 尚未进入验收完成状态。

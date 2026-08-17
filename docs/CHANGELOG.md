@@ -4,7 +4,7 @@
 
 ## 2026-08-17
 
-- 经用户明确授权，新增独立 GitHub Pages 公网演示交付：固定地址为 `https://peterloulh-tech.github.io/SanWenYuB2B/`，本机关闭后仍可访问。公开仓库只保存生产构建产物，不上传完整源码、项目文档或既有 Git 历史；项目源码 `origin` 继续保持本地优先和禁止未授权推送，后续公网版本更新仍需用户明确授权。
+- 经用户明确授权，GitHub 仓库 `peterloulh-tech/SanWenYuB2B` 成为项目唯一默认推送目标：`main` 分支继续保存 GitHub Pages 生产构建产物并提供固定公网演示，`source` 分支保存完整项目源码和本地 Git 历史。原始源码仓库 `singleMen/salmon-digital-platform` 仅保留为只读 `upstream`，后续不得向其推送。远端更新仍需用户明确授权。
 
 ## 2026-08-15
 
