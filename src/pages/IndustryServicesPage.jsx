@@ -43,9 +43,9 @@ export default function IndustryServicesPage() {
     </section>
 
     <div className="page-container industry-services-body">
-      <section className="patent-service-entry"><span><Lightbulb/></span><div><h2>专利成果</h2><p>查看深远海养殖、装备、加工、冷链与溯源方向的技术成果演示。</p></div><button type="button" onClick={() => navigate('/patents')}>进入专利成果 <ArrowRight/></button></section>
-      <section className="industry-category-grid">
-        {industryServiceCategories.map((item) => { const Icon = categoryIcons[item.id]; return <button className={category === item.id ? 'active' : ''} onClick={() => setCategory(category === item.id ? 'all' : item.id)} key={item.id}><span><Icon/></span><b>{item.name}</b><small>{item.description}</small></button> })}
+      <section className="industry-shortcut-grid" aria-label="产业服务快捷入口">
+        {industryServiceCategories.map((item) => { const Icon = categoryIcons[item.id]; return <button className={`industry-category-card ${category === item.id ? 'active' : ''}`} aria-pressed={category === item.id} onClick={() => setCategory(category === item.id ? 'all' : item.id)} key={item.id}><span><Icon/></span><b>{item.name}</b><small>{item.description}</small></button> })}
+        <article className="patent-service-entry"><span><Lightbulb/></span><div><h2>专利成果</h2><p>查看深远海养殖、装备、加工、冷链与溯源方向的技术成果演示。</p></div><button type="button" onClick={() => navigate('/patents')}>进入专利成果 <ArrowRight/></button></article>
       </section>
 
       <section className="industry-service-list-heading"><div><Boxes/><h2>{keyword || category !== 'all' ? '服务搜索结果' : '推荐产业服务'}</h2><span>共 {services.length} 项静态演示服务</span></div><button onClick={() => navigate('/services/orders')}>订单履约中心 <ArrowRight/></button></section>

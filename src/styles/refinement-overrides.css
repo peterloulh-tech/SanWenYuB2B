@@ -78,18 +78,19 @@ a, button { transition: color .18s ease, background-color .18s ease, border-colo
 .hero-search-stack {
   display: grid;
   width: max-content;
-  grid-template-columns: max-content var(--platform-search-button-width, 84px);
+  grid-template-columns: max-content;
 }
 .hero-search-stack > h1,
-.hero-search-stack > p { grid-column: 1; }
+.hero-search-stack > p,
+.hero-search-stack > .official-channel-mark { grid-column: 1; }
 .hero-search-stack > p {
   margin-top: 6px;
   color: #14346d;
   font-size: 19px;
 }
 .hero-search-stack > .hero-search {
-  width: 100%;
-  grid-column: 1 / 3;
+  width: clamp(460px, 30vw, 580px);
+  grid-column: 1;
 }
 
 .industry-products-search > .platform-search {

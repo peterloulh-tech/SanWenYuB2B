@@ -60,5 +60,5 @@ test('七个 PC 搜索入口共用首页连体搜索样式', async () => {
   assert.match(styles, /\.platform-search\s*\{[^}]*border: 1\.5px solid var\(--platform-search-border\)/s)
   assert.match(styles, /\.platform-search > button\s*\{[^}]*border-left: 1px solid var\(--platform-search-border\)/s)
   assert.match(styles, /\.platform-search > button\s*\{[^}]*justify-content: center/s)
-  assert.match(styles, /\.hero-search-stack > \.hero-search\s*\{[^}]*grid-column: 1 \/ 3/s)
+  assert.match(styles, /\.hero-search-stack > \.hero-search\s*\{[^}]*width: clamp\(460px, 30vw, 580px\)[^}]*grid-column: 1/s)
 })

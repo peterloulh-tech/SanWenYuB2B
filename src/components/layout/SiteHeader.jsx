@@ -31,7 +31,7 @@ export default function SiteHeader() {
   const navs = isRetail ? retailNavs : enterpriseNavs;
   return (
     <header className={`site-header h-[60px] border-b border-slate-100 bg-white ${isRetail ? "retail-header" : ""}`}>
-      <div className="page-container flex h-full items-center justify-between">
+      <div className="page-container site-header-inner">
         <div className="site-brand-group">
           <button
             className="brand-logo"
@@ -43,7 +43,7 @@ export default function SiteHeader() {
           </button>
           <IdentitySwitcher />
         </div>
-        <nav className="flex h-full items-center gap-9 text-[16px] font-bold text-[#00015F]">
+        <nav className="site-main-nav">
           {navs.map(([to, label]) => (
             <NavLink
               end={to === "/" || to === "/retail"}
@@ -61,7 +61,7 @@ export default function SiteHeader() {
             </NavLink>
           ))}
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="site-header-actions">
           {isRetail && <button className="retail-cart-link" type="button" onClick={() => navigate("/retail/cart")}>
             <ShoppingCart />购物车
           </button>}

@@ -47,9 +47,8 @@ export default function ProcurementPage() {
 
   return <main className="tp-page tp-demand-page">
     <div className="tp-crumb">首页 <b>›</b> 采购大厅</div>
-    <section className="tp-title-row"><div><h1>采购需求大厅</h1><p>发布采购需求 · 多家供应商在线报价</p></div><div className="tp-title-actions"><button className="tp-primary" onClick={() => navigate('/procurement/new')}><Plus/>发布采购需求</button><button className="tp-outline"><ClipboardList/>我的采购需求</button></div></section>
+    <section className="tp-title-row"><div><h1>采购需求大厅</h1><p>发布采购需求 · 多家供应商在线报价</p></div><div className="tp-title-actions"><form className="tp-title-search platform-search" onSubmit={(event) => { event.preventDefault(); executeSearch() }}><Search/><input aria-label="搜索采购需求" value={keywordInput} onChange={(event) => setKeywordInput(event.target.value)} placeholder="搜索采购产品、采购企业"/><button type="submit">搜索</button></form><button className="tp-primary" onClick={() => navigate('/procurement/new')}><Plus/>发布采购需求</button><button className="tp-outline"><ClipboardList/>我的采购需求</button></div></section>
     <section className="tp-demand-filters">
-      <form className="platform-search" onSubmit={(event) => { event.preventDefault(); executeSearch() }}><Search/><input aria-label="搜索采购需求" value={keywordInput} onChange={(event) => setKeywordInput(event.target.value)} placeholder="搜索采购产品、采购企业"/><button type="submit">搜索</button></form>
       <select aria-label="按产品类型筛选" value={productType} onChange={(event) => setProductType(event.target.value)}>{productTypes.map((option) => <option key={option}>{option}</option>)}</select>
       <select aria-label="按交付地区筛选" value={deliveryCity} onChange={(event) => setDeliveryCity(event.target.value)}>{deliveryCities.map((option) => <option key={option}>{option}</option>)}</select>
       <select aria-label="按采购状态筛选" value={status} onChange={(event) => setStatus(event.target.value)}>{demandStatuses.map((option) => <option key={option}>{option}</option>)}</select>
