@@ -1,12 +1,13 @@
 import { enterpriseProductSections, industryProducts } from './industryProducts.js'
+import { platformEntities } from './platformEntities.js'
 
 const supplierIds = new Map()
 
 industryProducts.forEach((product) => {
-  if (!supplierIds.has(product.supplier)) supplierIds.set(product.supplier, supplierIds.size + 1)
+  if (!supplierIds.has(product.supplier)) supplierIds.set(product.supplier, product.supplier === '山东万泽丰海洋开发集团有限公司' ? 'wanzefeng-group' : supplierIds.size + 1)
 })
 
-export const supplierDirectory = enterpriseProductSections.flatMap((section) => {
+const generatedSupplierDirectory = enterpriseProductSections.flatMap((section) => {
   const sectionSuppliers = new Map()
 
   industryProducts
@@ -31,6 +32,21 @@ export const supplierDirectory = enterpriseProductSections.flatMap((section) => 
     productCount: supplier.productNames.length,
   }))
 })
+
+const profileOnlyEntities = platformEntities
+  .filter((entity) => entity.id !== 'wanzefeng-group')
+  .map((entity) => ({
+    id: entity.id,
+    name: entity.name,
+    region: entity.region,
+    section: 'all',
+    categories: [entity.type === '行业协会' ? '行业协会' : '平台承担主体'],
+    productNames: [],
+    productCount: 0,
+    profileOnly: true,
+  }))
+
+export const supplierDirectory = [...generatedSupplierDirectory, ...profileOnlyEntities]
 
 export const supplierCounts = Object.fromEntries(
   enterpriseProductSections.map((section) => [

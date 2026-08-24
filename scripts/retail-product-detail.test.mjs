@@ -27,6 +27,6 @@ test('商品详情按编号返回对应商品，未知编号返回空结果', ()
 
 test('商品详情可以获得对应的中文分类名称', () => {
   assert.equal(typeof retailData.findRetailCategory, 'function')
-  assert.equal(retailData.findRetailCategory('other-seafood')?.name, '其他海产')
+  assert.equal(retailData.findRetailCategory('salmon-meals')?.name, '三文鱼预制菜')
   assert.equal(retailData.findRetailCategory('not-found'), null)
 })

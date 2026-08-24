@@ -10,7 +10,7 @@ const {
   findIndustryService,
 } = industryServiceData
 
-test('企业首页第二排将三类商品入口指向统一企业商品大厅', () => {
+test('企业首页第二排保留两类商品入口并新增溯源查询', () => {
   assert.equal(additionalEnterpriseActions.length, 4)
   assert.deepEqual(
     additionalEnterpriseActions.map(({ title, path }) => ({ title, path })),
@@ -18,7 +18,7 @@ test('企业首页第二排将三类商品入口指向统一企业商品大厅',
       { title: '产业服务', path: '/services' },
       { title: '养殖供应', path: '/products?section=aquaculture' },
       { title: '深加工品', path: '/products?section=processed' },
-      { title: '其他海产', path: '/products?section=seafood' },
+      { title: '溯源查询', path: '/traceability' },
     ],
   )
 })

@@ -5,6 +5,7 @@ import EnterpriseSectionCards from '../components/business/EnterpriseSectionCard
 import SiliconAssistant from '../components/ai/SiliconAssistant'
 import PageHero from '../components/ui/PageHero'
 import { filterSupplierDirectory, supplierCounts } from '../data/supplierDirectory'
+import { findPlatformEntity } from '../data/platformEntities'
 import { normalizeVoiceSearchText } from '../features/voice/voiceSearch'
 import '../styles/suppliers-page.css'
 
@@ -59,13 +60,13 @@ export default function SuppliersPage() {
       />
 
       <section className="supplier-enterprise-grid" aria-live="polite">
-        {filteredSuppliers.map((supplier) => <article className="supplier-enterprise-card" key={supplier.id}>
+        {filteredSuppliers.map((supplier) => { const entity = findPlatformEntity(supplier.id); return <article className="supplier-enterprise-card" key={supplier.id}>
           <header>
-            <div className={`supplier-logo s${(supplier.id - 1) % 4}`}><Building2 /></div>
+            <div className={`supplier-logo s${typeof supplier.id === 'number' ? (supplier.id - 1) % 4 : 0}`}>{entity?.logo ? <img src={entity.logo} alt={`${entity.name} Logo`}/> : entity ? <small>{entity.logoStatus}</small> : <Building2 />}</div>
             <div>
               <h2>{supplier.name}</h2>
               <p className="supplier-card-meta">
-                <span><BadgeCheck />平台认证供应商</span>
+                <span><BadgeCheck />{entity?.type || '平台供应商'}</span>
                 <span><MapPin />{supplier.region}</span>
               </p>
             </div>
@@ -74,18 +75,18 @@ export default function SuppliersPage() {
           <div className="supplier-products">
             <div className="supplier-products-heading">
               <h3>主营品类</h3>
-              <span>{supplier.productCount} 项演示商品</span>
+              <span>{supplier.productCount ? `${supplier.productCount} 项演示商品` : '资料待补充'}</span>
             </div>
             <div className="supplier-product-tags">
               {supplier.categories.map((category) => <span key={category}>{category}</span>)}
             </div>
-            <p>代表商品：{supplier.productNames.join('、')}</p>
+            <p>代表商品：{supplier.productNames.join('、') || '资料待补充'}</p>
           </div>
 
           <footer>
             <button type="button" onClick={() => navigate(`/suppliers/${supplier.id}`)}>查看企业主页</button>
           </footer>
-        </article>)}
+        </article>})}
       </section>
 
       {filteredSuppliers.length === 0 && <div className="supplier-empty">

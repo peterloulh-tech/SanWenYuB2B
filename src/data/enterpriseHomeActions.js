@@ -52,10 +52,12 @@ export const additionalEnterpriseActions = [
     color: 'green',
   },
   {
-    icon: 'seafood',
-    title: '其他海产',
-    description: '虾、蟹与贝类批量采购',
-    path: '/products?section=seafood',
+    icon: 'traceability',
+    title: '溯源查询',
+    description: '输入批次码，查看基础溯源信息',
+    path: '/traceability',
     color: 'violet',
   },
+  // 按今日整改要求暂不上线，可恢复：
+  // { icon: 'seafood', title: '其他海产', description: '虾、蟹与贝类批量采购', path: '/products?section=seafood', color: 'violet' },
 ]

@@ -7,11 +7,11 @@ import { filterRetailProducts, retailProducts } from '../src/data/retailData.js'
 test('零售商品支持跨分类搜索和分类收窄', () => {
   assert.deepEqual(
     filterRetailProducts(retailProducts, { category: 'all', keyword: '三文鱼' }).map(({ id }) => id),
-    ['fresh-salmon-center', 'salmon-sashimi', 'smoked-salmon'],
+    ['fresh-salmon-center', 'salmon-sashimi', 'smoked-salmon', 'pan-seared-salmon-steak', 'teriyaki-salmon-meal', 'salmon-family-gift-box', 'salmon-festival-gift-box'],
   )
   assert.deepEqual(
-    filterRetailProducts(retailProducts, { category: 'other-seafood', keyword: '' }).map(({ id }) => id),
-    ['garlic-scallops', 'rizhao-prawns', 'swimming-crab'],
+    filterRetailProducts(retailProducts, { category: 'salmon-meals', keyword: '' }).map(({ id }) => id),
+    ['pan-seared-salmon-steak', 'teriyaki-salmon-meal'],
   )
 })
 

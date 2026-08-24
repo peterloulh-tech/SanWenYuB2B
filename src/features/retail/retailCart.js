@@ -2,7 +2,7 @@ import { findRetailProduct } from '../../data/retailData.js'
 
 const DEFAULT_CART = [
   { productId: 'fresh-salmon-center', quantity: 1 },
-  { productId: 'rizhao-prawns', quantity: 2 },
+  { productId: 'pan-seared-salmon-steak', quantity: 2 },
 ]
 
 export function clampRetailQuantity(quantity) {

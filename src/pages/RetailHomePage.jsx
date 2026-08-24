@@ -1,8 +1,10 @@
 import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChevronRight, Fish, Gift, Search, Shell, ShieldCheck, Snowflake, Sparkles, Utensils } from 'lucide-react'
+import { ChevronRight, Fish, Gift, ScanLine, Search, Shell, ShieldCheck, Snowflake, Sparkles, Utensils } from 'lucide-react'
 import SiliconAssistant from '../components/ai/SiliconAssistant'
+import PlatformSubjects from '../components/business/PlatformSubjects'
 import { filterRetailProducts, retailCategories, retailProducts } from '../data/retailData'
+import { salmonRecipes } from '../data/salmonKitchen'
 import { normalizeVoiceSearchText } from '../features/voice/voiceSearch'
 import '../styles/retail-pages.css'
 
@@ -42,8 +44,9 @@ export default function RetailHomePage() {
     <section className="retail-hero">
       <div className="page-container retail-hero-inner">
         <div className="retail-hero-copy">
-          <h1>鲜从日照来，新鲜送到家</h1>
-          <p>家庭餐桌的品质三文鱼与海鲜优选</p>
+          <h1>耕海牧渔向深蓝，日照鲜味通天下</h1>
+          <p>家庭餐桌的品质三文鱼优选</p>
+          <div className="official-channel-mark"><ScanLine/>日照深海三文鱼唯一官方购买渠道</div>
           <form className="retail-search platform-search" onSubmit={(event) => { event.preventDefault(); executeSearch() }}>
             <Search />
             <input aria-label="搜索零售商品" value={keywordInput} onChange={(event) => setKeywordInput(event.target.value)} placeholder="搜索商品、品类、规格" />
@@ -92,6 +95,11 @@ export default function RetailHomePage() {
       </div>
       {products.length === 0 && <div className="retail-products-empty"><Search/><h3>没有找到匹配商品</h3><p>请更换关键词或取消当前商品分类。</p></div>}
     </section>
+    <section className="retail-kitchen-preview page-container">
+      <header><div><h2>今天怎么吃</h2><p>简单、方便、快捷的三文鱼家庭做法</p></div><button type="button" onClick={() => navigate('/salmon-kitchen?channel=retail')}>查看全部 <ChevronRight/></button></header>
+      <div>{salmonRecipes.slice(0, 3).map((recipe) => <button type="button" onClick={() => navigate(`/salmon-kitchen/${recipe.id}?channel=retail`)} key={recipe.id}><img src={recipe.image} alt={recipe.name}/><span><b>{recipe.name}</b><small>{recipe.time} · {recipe.difficulty}</small></span><ChevronRight/></button>)}</div>
+    </section>
+    <PlatformSubjects/>
     {productPrompt && <div className="retail-preview-backdrop" role="presentation">
       <section className="retail-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="retail-preview-title">
         <img src={productPrompt.product.image} alt="" />

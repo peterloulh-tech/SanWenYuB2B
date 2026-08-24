@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, BadgeCheck, Boxes, Factory, FlaskConical, PackageCheck, Search, Ship, Snowflake, Warehouse } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Boxes, Factory, FlaskConical, Lightbulb, PackageCheck, Search, Ship, Snowflake, Warehouse } from 'lucide-react'
 import { filterIndustryServices, getIndustryServiceCardFacts, industryServiceCategories, industryServices } from '../data/industryServices'
 import SiliconAssistant from '../components/ai/SiliconAssistant'
 import { normalizeVoiceSearchText } from '../features/voice/voiceSearch'
@@ -43,6 +43,7 @@ export default function IndustryServicesPage() {
     </section>
 
     <div className="page-container industry-services-body">
+      <section className="patent-service-entry"><span><Lightbulb/></span><div><h2>专利成果</h2><p>查看深远海养殖、装备、加工、冷链与溯源方向的技术成果演示。</p></div><button type="button" onClick={() => navigate('/patents')}>进入专利成果 <ArrowRight/></button></section>
       <section className="industry-category-grid">
         {industryServiceCategories.map((item) => { const Icon = categoryIcons[item.id]; return <button className={category === item.id ? 'active' : ''} onClick={() => setCategory(category === item.id ? 'all' : item.id)} key={item.id}><span><Icon/></span><b>{item.name}</b><small>{item.description}</small></button> })}
       </section>

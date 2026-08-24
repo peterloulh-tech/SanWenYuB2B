@@ -74,7 +74,7 @@ export default function IndustryProductsPage() {
   return <main className="industry-products-page">
     <section className="industry-products-hero">
       <div className="page-container industry-products-hero-inner">
-        <div><p>首页　›　企业商品大厅</p><h1>企业商品大厅</h1><span>鲜鱼、养殖物资、深加工品与其他海产统一查询，支持企业批量采购</span></div>
+        <div><p>首页　›　企业商品大厅</p><h1>企业商品大厅</h1><span>聚焦三文鱼鲜鱼、养殖物资与深加工品，支持企业批量采购</span></div>
         <div className="industry-products-search">
           <form className="platform-search" onSubmit={(event) => { event.preventDefault(); submitSearch() }}>
             <Search/><input aria-label="搜索企业商品" value={keywordInput} onChange={(event) => setKeywordInput(event.target.value)} placeholder="搜索商品、品种、产地或供应商"/><button type="submit">搜索</button>

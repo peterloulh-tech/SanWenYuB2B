@@ -19,11 +19,11 @@ test('直接进入购物车时提供两件互不重复的演示商品', () => {
 })
 
 test('详情页商品和数量成为购物车第一项并限制在一到九件', () => {
-  const cart = buildDemoCart('swimming-crab', 20)
+  const cart = buildDemoCart('salmon-festival-gift-box', 20)
 
-  assert.equal(cart[0].product.id, 'swimming-crab')
+  assert.equal(cart[0].product.id, 'salmon-festival-gift-box')
   assert.equal(cart[0].quantity, 9)
-  assert.notEqual(cart[1].product.id, 'swimming-crab')
+  assert.notEqual(cart[1].product.id, 'salmon-festival-gift-box')
   assert.equal(clampRetailQuantity(-2), 1)
   assert.equal(clampRetailQuantity(4), 4)
   assert.equal(clampRetailQuantity(12), 9)

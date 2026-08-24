@@ -13,25 +13,25 @@ import {
 test('结算参数只保留已勾选商品及其数量', () => {
   const serialized = serializeRetailCheckoutItems([
     { product: { id: 'fresh-salmon-center' }, quantity: 2, selected: true },
-    { product: { id: 'rizhao-prawns' }, quantity: 4, selected: false },
+    { product: { id: 'pan-seared-salmon-steak' }, quantity: 4, selected: false },
   ])
 
   assert.equal(serialized, 'fresh-salmon-center:2')
 })
 
 test('结算页还原商品后与购物车使用相同金额规则', () => {
-  const items = parseRetailCheckoutItems('swimming-crab:3,fresh-salmon-center:1')
+  const items = parseRetailCheckoutItems('pan-seared-salmon-steak:3,fresh-salmon-center:1')
 
   assert.deepEqual(items.map(item => [item.product.id, item.quantity, item.selected]), [
-    ['swimming-crab', 3, true],
+    ['pan-seared-salmon-steak', 3, true],
     ['fresh-salmon-center', 1, true],
   ])
   assert.deepEqual(calculateRetailCart(items), {
     selectedKinds: 2,
     selectedQuantity: 4,
-    goodsAmount: 289.6,
+    goodsAmount: 187.6,
     shippingFee: 8,
-    payableAmount: 297.6,
+    payableAmount: 195.6,
   })
 })
 
@@ -54,16 +54,16 @@ test('结算地址为空或手机号不正确时返回明确中文提示', () =>
 test('下单完成页从结算参数还原收货人、数量和应付金额', () => {
   const search = buildRetailOrderSuccessSearch([
     { product: { id: 'fresh-salmon-center' }, quantity: 1, selected: true },
-    { product: { id: 'rizhao-prawns' }, quantity: 2, selected: true },
+    { product: { id: 'pan-seared-salmon-steak' }, quantity: 2, selected: true },
   ], '张海燕')
 
-  assert.equal(search, 'items=fresh-salmon-center%3A1%2Crizhao-prawns%3A2&recipient=%E5%BC%A0%E6%B5%B7%E7%87%95')
+  assert.equal(search, 'items=fresh-salmon-center%3A1%2Cpan-seared-salmon-steak%3A2&recipient=%E5%BC%A0%E6%B5%B7%E7%87%95')
   assert.deepEqual(parseRetailOrderSuccess(new URLSearchParams(search)), {
     orderNumber: 'LS202608130018',
     recipient: '张海燕',
     selectedKinds: 2,
     selectedQuantity: 3,
-    payableAmount: 177.7,
+    payableAmount: 149.7,
     estimatedArrival: '预计明日 18:00 前送达',
   })
 })

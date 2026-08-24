@@ -56,7 +56,7 @@ test('商品大厅卡片分别展示品种、产品产地和供应商所在地',
   assert.match(html, new RegExp(product.region))
 })
 
-test('商品大厅默认每页最多显示八项并提供三页分页', () => {
+test('商品大厅默认每页最多显示八项并提供两页分页', () => {
   const firstPageHtml = renderToStaticMarkup(
     createElement(MemoryRouter, { initialEntries: ['/products'] }, createElement(IndustryProductsPage)),
   )
@@ -66,12 +66,12 @@ test('商品大厅默认每页最多显示八项并提供三页分页', () => {
 
   for (const product of industryProducts.slice(0, 8)) assert.match(firstPageHtml, new RegExp(product.name))
   assert.doesNotMatch(firstPageHtml, new RegExp(industryProducts[8].name))
-  for (const product of industryProducts.slice(8, 16)) assert.match(secondPageHtml, new RegExp(product.name))
+  for (const product of industryProducts.slice(8)) assert.match(secondPageHtml, new RegExp(product.name))
   assert.doesNotMatch(secondPageHtml, new RegExp(industryProducts[0].name))
   assert.match(firstPageHtml, /aria-label="商品分页"/)
   assert.match(firstPageHtml, /aria-current="page"[^>]*>1</)
   assert.match(firstPageHtml, />2<\/button>/)
-  assert.match(firstPageHtml, />3<\/button>/)
+  assert.doesNotMatch(firstPageHtml, />3<\/button>/)
   assert.doesNotMatch(firstPageHtml, /共 21 项静态演示商品/)
 })
 
@@ -96,10 +96,9 @@ test('鱼卵详情展示种源国家、发育阶段和枚计价单位', () => {
   assert.match(html, /供应商所在地：　山东青岛/)
 })
 
-test('海马详情醒目展示资质审核和合法来源提示', () => {
+test('暂不上线的海马详情无法通过旧链接访问', () => {
   const html = renderProductDetail('/products/farmed-dried-seahorse')
 
-  assert.match(html, /资质审核/)
-  assert.match(html, /合法来源/)
-  assert.match(html, /提交询价/)
+  assert.match(html, /未找到该商品/)
+  assert.doesNotMatch(html, /资质审核|合法来源/)
 })

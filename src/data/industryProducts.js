@@ -1,8 +1,9 @@
 export const enterpriseProductSections = [
-  { id: 'fresh', name: '鲜鱼产品', description: '三文鱼、鳟鱼与标准分割' },
+  { id: 'fresh', name: '鲜鱼产品', description: '日照深海三文鱼与标准分割' },
   { id: 'aquaculture', name: '养殖供应', description: '鱼卵、鱼苗、饲料、鱼药与设备' },
   { id: 'processed', name: '深加工品', description: '烟熏、鱼饼与预制菜' },
-  { id: 'seafood', name: '其他海产', description: '虾、蟹、贝类与合规特色海产' },
+  // 按今日整改要求暂不上线，可恢复：
+  // { id: 'seafood', name: '其他海产', description: '虾、蟹、贝类与合规特色海产' },
 ]
 
 const product = (id, section, category, name, supplier, region, spec, price, minOrder, supply, image, extra = {}) => ({
@@ -21,14 +22,14 @@ const product = (id, section, category, name, supplier, region, spec, price, min
 })
 
 export const industryProducts = [
-  product('fresh-whole-salmon', 'fresh', '整鱼', '冰鲜大西洋鲑整鱼', '日照海洋食品有限公司', '山东日照', '4—6 千克/尾', '¥88/kg 起', '500 千克', '日供 25 吨', '/assets/products/whole-salmon-on-ice.png', {
-    species: '大西洋鲑', origin: '挪威', productForm: '冰鲜整鱼', unit: '千克', sourceType: '海水养殖', storage: '0—4℃ 冷藏储存',
+  product('fresh-whole-salmon', 'fresh', '整鱼', '日照深海三文鱼整鱼', '山东万泽丰海洋开发集团有限公司', '山东日照', '4—6 千克/尾', '¥88/kg 起', '500 千克', '日供 25 吨', '/assets/products/whole-salmon-on-ice.png', {
+    species: '大西洋鲑', origin: '山东日照深远海', productForm: '冰鲜整鱼', unit: '千克', sourceType: '深远海养殖·演示数据', storage: '0—4℃ 冷藏储存', traceBatchCode: 'RZ-SALMON-202608-001',
   }),
-  product('salmon-fillet', 'fresh', '鱼柳', '冷冻去皮三文鱼柳', '青岛极鲜供应链有限公司', '山东青岛', '1.2—1.8 千克/片', '¥118/kg 起', '300 千克', '周供 40 吨', '/assets/products/salmon-fillet.png', {
-    species: '大西洋鲑', origin: '智利', productForm: '冷冻去皮鱼柳', unit: '千克', sourceType: '海水养殖',
+  product('salmon-fillet', 'fresh', '鱼柳', '日照深海三文鱼鱼柳', '山东万泽丰海洋开发集团有限公司', '山东日照', '1.2—1.8 千克/片', '¥118/kg 起', '300 千克', '周供 40 吨', '/assets/products/salmon-fillet.png', {
+    species: '大西洋鲑', origin: '山东日照深远海', productForm: '冷冻去皮鱼柳', unit: '千克', sourceType: '深远海养殖原料·演示数据', traceBatchCode: 'RZ-SALMON-202608-002',
   }),
-  product('salmon-slices', 'fresh', '切片', '标准化三文鱼切片', '荣成海味加工有限公司', '山东荣成', '500 克/盒', '¥72/盒起', '200 盒', '日供 8,000 盒', '/assets/products/salmon-slices.png', {
-    species: '大西洋鲑', origin: '法罗群岛', productForm: '标准切片', unit: '盒', sourceType: '海水养殖原料·国内加工',
+  product('salmon-slices', 'fresh', '切片', '日照深海三文鱼切片', '山东万泽丰海洋开发集团有限公司', '山东日照', '500 克/盒', '¥72/盒起', '200 盒', '日供 8,000 盒', '/assets/products/salmon-slices.png', {
+    species: '大西洋鲑', origin: '山东日照深远海', productForm: '标准切片', unit: '盒', sourceType: '深远海养殖原料·演示数据', traceBatchCode: 'RZ-SALMON-202608-003',
   }),
   product('salmon-byproducts', 'fresh', '副产物', '三文鱼骨及鱼头原料', '日照鲜港水产有限公司', '山东日照', '20 千克/箱', '¥12/kg 起', '1 吨', '日供 6 吨', '/assets/products/salmon-byproducts.jpg', {
     species: '大西洋鲑', origin: '冰岛', productForm: '鱼骨鱼头副产物', unit: '千克', sourceType: '海水养殖原料·国内分拣',
@@ -69,6 +70,7 @@ export const industryProducts = [
     species: '大西洋鲑', origin: '加拿大', productForm: '调理预制菜', unit: '盒', sourceType: '海水养殖原料·国内加工',
   }),
 
+  /* 按今日整改要求暂不上线，可恢复：其他海产 6 项代码保留。
   product('rizhao-prawns-b2b', 'seafood', '虾类', '日照海捕大虾', '日照海洋捕捞有限公司', '山东日照', '20—30 尾/千克', '¥56/kg 起', '500 千克', '日供 12 吨', '/assets/retail/rizhao-prawns.png', {
     species: '对虾', origin: '山东日照近海', productForm: '冰鲜整虾', unit: '千克', sourceType: '合规捕捞',
   }),
@@ -87,6 +89,7 @@ export const industryProducts = [
   product('rizhao-xishishe-clam', 'seafood', '西施舌', '日照鲜活西施舌', '日照金滩贝类养殖有限公司', '山东日照', '壳长 8—10 厘米，10—15 只/千克', '¥68/kg 起', '200 千克', '日供 2 吨', '/assets/products/rizhao-xishishe-clam.jpg', {
     species: '西施马珂蛤', origin: '山东日照海域', productForm: '鲜活贝类', unit: '千克', sourceType: '人工养殖/合规采捕', delivery: '低温保活运输', storage: '5—10℃ 湿润透气暂养', complianceNote: '演示商品；供货批次需核验人工养殖或合规采捕来源。',
   }),
+  */
 ]
 
 const legacyProductAliases = {

@@ -5,7 +5,7 @@ import test from 'node:test'
 
 const industryProductData = await import('../src/data/industryProducts.js').catch(() => null)
 
-test('统一企业商品大厅提供四类直观商品分区', () => {
+test('统一企业商品大厅提供三类三文鱼全产业链商品分区', () => {
   assert.ok(industryProductData, '需要提供全产业链商品数据模块')
   assert.deepEqual(
     industryProductData.enterpriseProductSections.map(({ id, name }) => ({ id, name })),
@@ -13,21 +13,20 @@ test('统一企业商品大厅提供四类直观商品分区', () => {
       { id: 'fresh', name: '鲜鱼产品' },
       { id: 'aquaculture', name: '养殖供应' },
       { id: 'processed', name: '深加工品' },
-      { id: 'seafood', name: '其他海产' },
     ],
   )
 })
 
-test('商品数据覆盖新增鳟鱼、拆分后的鱼卵鱼苗与新增其他海产', () => {
+test('可见商品覆盖鲜鱼、拆分后的鱼卵鱼苗与深加工品', () => {
   assert.ok(industryProductData, '需要提供全产业链商品数据模块')
   const { industryProducts } = industryProductData
   assert.deepEqual(
-    ['fresh', 'aquaculture', 'processed', 'seafood'].map((section) => industryProducts.filter((product) => product.section === section).length),
-    [5, 7, 3, 6],
+    ['fresh', 'aquaculture', 'processed'].map((section) => industryProducts.filter((product) => product.section === section).length),
+    [5, 7, 3],
   )
   assert.deepEqual(
     industryProducts.map(({ category }) => category),
-    ['整鱼', '鱼柳', '切片', '副产物', '鳟鱼', '鱼卵', '鱼卵', '鱼苗', '鱼苗', '鱼药疫苗', '饲料', '养殖设备', '烟熏产品', '鱼饼', '预制菜', '虾类', '蟹类', '扇贝', '生蚝', '海马', '西施舌'],
+    ['整鱼', '鱼柳', '切片', '副产物', '鳟鱼', '鱼卵', '鱼卵', '鱼苗', '鱼苗', '鱼药疫苗', '饲料', '养殖设备', '烟熏产品', '鱼饼', '预制菜'],
   )
 })
 
@@ -75,18 +74,15 @@ test('所有三文鱼商品都分别提供产品产地和供应商所在地', ()
   }
 })
 
-test('鳟鱼、海马和西施舌均有独立商品与合规口径', () => {
+test('鳟鱼保留，海马和西施舌按整改不可从旧链接访问', () => {
   const trout = industryProductData.findIndustryProduct('rainbow-trout-whole')
   const seahorse = industryProductData.findIndustryProduct('farmed-dried-seahorse')
   const clam = industryProductData.findIndustryProduct('rizhao-xishishe-clam')
 
   assert.equal(trout?.section, 'fresh')
   assert.equal(trout?.species, '虹鳟')
-  assert.equal(seahorse?.section, 'seafood')
-  assert.equal(seahorse?.productForm, '人工养殖干品')
-  assert.match(seahorse?.complianceNote ?? '', /合法来源|许可|资质/)
-  assert.equal(clam?.species, '西施马珂蛤')
-  assert.match(clam?.sourceType ?? '', /养殖|合规采捕/)
+  assert.equal(seahorse, null)
+  assert.equal(clam, null)
 })
 
 test('复核不匹配的七类商品后使用各自专用图片', () => {
@@ -111,8 +107,6 @@ test('新增商品引用的本地图片均存在', async () => {
     'norway-salmon-eggs',
     'us-rainbow-trout-eggs',
     'us-rainbow-trout-fry',
-    'farmed-dried-seahorse',
-    'rizhao-xishishe-clam',
   ]
 
   for (const id of newProductIds) {
@@ -131,7 +125,7 @@ test('统一大厅同时支持商品分区预筛选和关键词搜索', () => {
   )
   assert.deepEqual(
     filterIndustryProducts(industryProducts, { section: 'all', keyword: '青岛' }).map(({ id }) => id),
-    ['salmon-fillet', 'norway-salmon-eggs', 'norway-salmon-fry', 'smoked-salmon', 'sea-scallops'],
+    ['norway-salmon-eggs', 'norway-salmon-fry', 'smoked-salmon'],
   )
   assert.deepEqual(
     filterIndustryProducts(industryProducts, { section: 'processed', keyword: '预制菜' }).map(({ id }) => id),

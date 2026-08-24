@@ -5,6 +5,7 @@ import { getRetailNavActive } from "../../features/identity/identityPolicy";
 
 const enterpriseNavs = [
   ["/", "首页"],
+  ["/rizhao-industry", "日照产业"],
   ["/products", "产品大厅"],
   ["/procurement", "采购大厅"],
   ["/market", "市场行情"],
@@ -15,16 +16,18 @@ const enterpriseNavs = [
 
 const retailNavs = [
   ["/retail", "首页"],
+  ["/rizhao-industry?channel=retail", "日照产业"],
   ["/retail#fresh-salmon", "冰鲜三文鱼"],
-  ["/retail#fish-products", "鱼类加工品"],
-  ["/retail#other-seafood", "其他海产"],
-  ["/retail#seafood-gifts", "海鲜礼盒"],
+  ["/retail#salmon-products", "三文鱼加工品"],
+  ["/retail#salmon-meals", "三文鱼预制菜"],
+  ["/retail#salmon-gifts", "三文鱼礼盒"],
+  // 按今日整改要求暂不上线，可恢复：其他海产与海鲜礼盒旧导航。
 ];
 
 export default function SiteHeader() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const isRetail = pathname.startsWith("/retail");
+  const { pathname, search } = useLocation();
+  const isRetail = pathname.startsWith("/retail") || new URLSearchParams(search).get('channel') === 'retail';
   const navs = isRetail ? retailNavs : enterpriseNavs;
   return (
     <header className={`site-header h-[60px] border-b border-slate-100 bg-white ${isRetail ? "retail-header" : ""}`}>
@@ -32,9 +35,12 @@ export default function SiteHeader() {
         <div className="site-brand-group">
           <button
             className="brand-logo"
-            aria-label="返回首页"
+            aria-label={`日照三文鱼交易平台，返回${isRetail ? '个人消费' : '企业交易'}首页`}
             onClick={() => navigate(isRetail ? "/retail" : "/")}
-          />
+          >
+            <img src="/assets/brand/rizhao-salmon-festival-mark-registered-2k-transparent.png" alt="日照三文鱼交易平台 Logo" />
+            <span>日照三文鱼交易平台</span>
+          </button>
           <IdentitySwitcher />
         </div>
         <nav className="flex h-full items-center gap-9 text-[16px] font-bold text-[#00015F]">
@@ -42,7 +48,7 @@ export default function SiteHeader() {
             <NavLink
               end={to === "/" || to === "/retail"}
               className={({ isActive }) =>
-                `relative flex h-full items-center whitespace-nowrap ${(isRetail ? getRetailNavActive(to, pathname) : isActive) ? "active text-[#0051FE]" : ""}`
+                `relative flex h-full items-center whitespace-nowrap ${(pathname === '/rizhao-industry' && to.startsWith('/rizhao-industry')) || (isRetail ? getRetailNavActive(to, pathname) : isActive) ? "active text-[#0051FE]" : ""}`
               }
               key={to}
               to={to}

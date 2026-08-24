@@ -3,21 +3,23 @@ import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 import { filterSupplierDirectory, mergeSupplierDirectory, supplierCounts, supplierDirectory } from '../src/data/supplierDirectory.js'
 
-test('供应商目录从统一商品库生成四类十九家企业', () => {
-  assert.deepEqual(supplierCounts, { fresh: 5, aquaculture: 6, processed: 3, seafood: 6 })
-  assert.equal(supplierDirectory.length, 20)
-  assert.equal(new Set(supplierDirectory.map((supplier) => supplier.name)).size, 19)
+test('供应商目录聚焦三文鱼三类并纳入三家平台承担主体', () => {
+  assert.deepEqual(supplierCounts, { fresh: 3, aquaculture: 6, processed: 3 })
+  assert.equal(supplierDirectory.length, 14)
+  assert.equal(new Set(supplierDirectory.map((supplier) => supplier.name)).size, 14)
 
   const crossSectionSupplier = supplierDirectory.filter((supplier) => supplier.name === '日照鲜港水产有限公司')
-  assert.deepEqual(crossSectionSupplier.map((supplier) => supplier.section), ['fresh', 'seafood'])
+  assert.deepEqual(crossSectionSupplier.map((supplier) => supplier.section), ['fresh'])
   assert.equal(filterSupplierDirectory({ section: 'aquaculture', keyword: '鱼苗' }).length, 2)
   assert.equal(filterSupplierDirectory({ section: 'processed', keyword: '威海' }).length, 0)
 
   const mergedDirectory = mergeSupplierDirectory()
-  assert.equal(mergedDirectory.length, 19)
+  assert.equal(mergedDirectory.length, 14)
   const mergedCrossSectionSupplier = mergedDirectory.find((supplier) => supplier.name === '日照鲜港水产有限公司')
-  assert.equal(mergedCrossSectionSupplier.productCount, 2)
-  assert.deepEqual(mergedCrossSectionSupplier.productNames, ['三文鱼骨及鱼头原料', '鲜活梭子蟹'])
+  assert.equal(mergedCrossSectionSupplier.productCount, 1)
+  assert.deepEqual(mergedCrossSectionSupplier.productNames, ['三文鱼骨及鱼头原料'])
+  assert.ok(mergedDirectory.some((supplier) => supplier.name === '山东旭丰渔业有限公司'))
+  assert.ok(mergedDirectory.some((supplier) => supplier.name === '日照深海三文鱼产业协会'))
   assert.equal(filterSupplierDirectory({ section: 'all', keyword: '日照鲜港' }).length, 1)
 })
 

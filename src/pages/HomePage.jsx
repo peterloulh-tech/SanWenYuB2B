@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { BadgeDollarSign, BarChart3, ChevronRight, ClipboardCheck, CookingPot, Fish, Newspaper, Search, Shell, ShieldCheck, ShoppingCart, WalletCards, Wrench } from 'lucide-react'
+import { BadgeDollarSign, ChevronRight, ClipboardCheck, CookingPot, Fish, Newspaper, ScanLine, Search, Shell, ShoppingCart, WalletCards, Wrench } from 'lucide-react'
 import { homeService } from '../services/homeService'
 import { additionalEnterpriseActions, enterprisePrimaryActions } from '../data/enterpriseHomeActions'
 import SiliconAssistant from '../components/ai/SiliconAssistant'
+import PlatformSubjects from '../components/business/PlatformSubjects'
 import { normalizeVoiceSearchText } from '../features/voice/voiceSearch'
 import '../styles/home-page.css'
 
 const financeItems = [[Fish,'养殖期融资','鱼在海里，钱先到'],[WalletCards,'存货质押融资','鱼在库里，钱先回来'],[ClipboardCheck,'订单融资','订单在手，资金无忧'],[BadgeDollarSign,'账期支付','先提货，后付款']]
-const actionIcons = { purchase: ShoppingCart, sourcing: ClipboardCheck, news: Newspaper, service: Wrench, processed: CookingPot, seafood: Shell }
+const actionIcons = { purchase: ShoppingCart, sourcing: ClipboardCheck, news: Newspaper, service: Wrench, processed: CookingPot, seafood: Shell, traceability: ScanLine }
 const actionIconImages = {
   sell: '/assets/home-icons/quick-sell-original.png',
   upstream: '/assets/home-icons/quick-aquaculture-original.png',
@@ -65,7 +66,7 @@ export default function HomePage(){
   }
 
   return <>
-    <section className="hero-banner"><div className="hero-content"><div className="hero-copy"><div className="hero-search-stack"><h1>三文鱼数字化交易平台</h1><p>连接优质养殖资源 · 服务全国采购市场</p><form className="hero-search platform-search" onSubmit={submitHomeSearch}><Search size={21}/><input aria-label="搜索企业商品" value={searchKeyword} onChange={(event)=>setSearchKeyword(event.target.value)} placeholder="搜索商品、品种、产地或供应商"/><button type="submit">搜索</button></form></div><div className="hero-abilities">{[[ShieldCheck,'国企平台'],[ShieldCheck,'安全可靠'],[ShoppingCart,'在线交易'],[BarChart3,'市场行情']].map(([I,t])=><span key={t}><I size={22}/>{t}</span>)}</div></div><div className="hero-slogan"><strong>日照起航<br/>服务全国</strong><span>国企平台 · 值得信赖</span></div></div></section>
+    <section className="hero-banner"><div className="hero-content"><div className="hero-copy"><div className="hero-search-stack"><h1>端稳中国海洋饭碗·挺起国产三文鱼脊梁</h1><div className="official-channel-mark"><ScanLine/>日照深海三文鱼唯一官方购买渠道</div><form className="hero-search platform-search" onSubmit={submitHomeSearch}><Search size={21}/><input aria-label="搜索企业商品" value={searchKeyword} onChange={(event)=>setSearchKeyword(event.target.value)} placeholder="搜索商品、品种、产地或供应商"/><button type="submit">搜索</button></form></div></div></div></section>
     <section className="quick-actions page-container relative z-10 grid grid-cols-4 gap-3">{enterprisePrimaryActions.map(({icon,title,description,path,color})=><button onClick={()=>navigate(path)} key={icon} className="action-card"><HomeActionIcon icon={icon} color={color}/><span className="text-left"><b>{title}</b><small>{description}</small></span><ChevronRight className="ml-auto text-blue-600"/></button>)}</section>
     <section className="quick-actions quick-actions-secondary page-container relative z-10 grid grid-cols-4 gap-3">{additionalEnterpriseActions.map(({icon,title,description,path,color})=><button onClick={()=>navigate(path)} key={icon} className="action-card"><HomeActionIcon icon={icon} color={color}/><span className="text-left"><b>{title}</b><small>{description}</small></span><ChevronRight className="ml-auto text-blue-600"/></button>)}</section>
     {/* 按用户要求暂时注释供应链金融横幅，保留原实现，后续可直接恢复。
@@ -75,7 +76,7 @@ export default function HomePage(){
       <section className="home-panel hot-panel"><header><h2>热门现货</h2><Link to="/products">更多 ›</Link></header><div className="home-product-marquee" role="region" aria-label="热门现货连续滚动商品"><div className="home-product-track">{[false,true].map((duplicate)=><div className="home-product-group" aria-hidden={duplicate} key={String(duplicate)}>{data.products.map((product)=><HomeProductCard product={product} duplicate={duplicate} key={`${duplicate}-${product.id}`}/>)}</div>)}</div></div></section>
       <section className="home-panel demand-panel"><header><h2>最新采购需求</h2><Link to="/procurement">更多 ›</Link></header>{data.demands.map(d=><Link className="home-demand-row" to={`/procurement/${d.id}`} key={d.id}><ClipboardCheck/><div><b>{d.name}</b><span className="home-row-meta"><p>{d.amount} · {d.city}</p><small>截止 {d.deadline}</small></span></div><span>查看报价</span></Link>)}</section>
       <section className="home-panel supplier-panel"><header><h2>优质供应商</h2><Link to="/suppliers">更多 ›</Link></header>{data.suppliers.map((s,i)=><Link className="home-supplier-row" to={`/suppliers/${i+1}`} key={s}><span className={`supplier-logo s${i}`}><Fish/></span><div><b>{s}</b><span className="home-row-meta"><p>整鱼/鱼柳/切片</p><small>{['日照市','威海市/荣成市','青岛市即墨区','大连市'][i]}</small></span></div><em>平台认证</em></Link>)}</section>
-    </main><section className="home-stats page-container">{data.stats.map((s,i)=><div key={s[0]}><img className="home-stat-icon" src={statIconImages[i]} width="60" height="60" alt="" aria-hidden="true"/><p><span>{s[0]}</span><strong>{s[1]}</strong><small>{s[2]}</small></p></div>)}</section></>:<div className="p-20 text-center text-blue-600">正在加载平台数据...</div>}
+    </main><section className="home-stats page-container">{data.stats.map((s,i)=><div key={s[0]}><img className="home-stat-icon" src={statIconImages[i]} width="60" height="60" alt="" aria-hidden="true"/><p><span>{s[0]}</span><strong>{s[1]}</strong><small>{s[2]}</small></p></div>)}</section><PlatformSubjects/></>:<div className="p-20 text-center text-blue-600">正在加载平台数据...</div>}
     <SiliconAssistant onSearch={handleVoiceSearch}/>
   </>
 }

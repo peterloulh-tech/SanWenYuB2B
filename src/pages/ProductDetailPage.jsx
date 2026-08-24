@@ -1,4 +1,4 @@
-import { BadgeCheck, Check, ChevronRight } from 'lucide-react'
+import { Check, ChevronRight, ScanLine } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { enterpriseProductSections, findIndustryProduct, industryProducts } from '../data/industryProducts'
 import '../styles/trade-pages.css'
@@ -35,9 +35,9 @@ export default function ProductDetailPage(){
     <section className="tp-detail-hero">
       <div className="tp-gallery"><img className="tp-main-photo" src={product.image} alt={product.name}/><div>{photos.map((x,i)=><img className={i===0?'active':''} src={x} key={`${x}-${i}`} alt={`${product.name}展示图`}/>)}</div></div>
       <div className="tp-product-info">
-        <div className="tp-product-copy"><h1>{product.name} <span><BadgeCheck/>平台认证</span></h1><h3>品类：{product.category}　产品形态：{product.productForm}</h3><h3>规格：{product.spec}</h3><strong>{product.price}</strong><p>{originLabel}：{product.origin}</p><p>供应商所在地：{product.region}</p><p>供应能力：{product.supply}　起订量：{product.minOrder}</p>{product.complianceNote&&<div className="tp-compliance-note">{product.complianceNote}</div>}<div className="tp-service-tags"><span><Check/>企业配送</span><span><Check/>支持开票</span></div><em>{product.settlement}</em></div>
-        <div className="tp-purchase-box"><label>采购数量<div><input defaultValue="1"/><span>{product.unit}</span></div></label><label>交付城市<select defaultValue="上海"><option>上海</option><option>北京</option><option>广州</option></select></label><button className="tp-primary" onClick={()=>nav(`/procurement/${product.id}/quote`)}>提交询价</button><button className="tp-outline" onClick={()=>nav('/procurement/new')}>发布采购需求</button></div>
-        <footer>供应商：{product.supplier}　<span><BadgeCheck/>平台认证</span><button onClick={()=>nav('/suppliers')}>查看企业 <ChevronRight/></button></footer>
+        <div className="tp-product-copy"><h1>{product.name}</h1><h3>品类：{product.category}　产品形态：{product.productForm}</h3><h3>规格：{product.spec}</h3><strong>{product.price}</strong><p>{originLabel}：{product.origin}</p><p>供应商所在地：{product.region}</p><p>供应能力：{product.supply}　起订量：{product.minOrder}</p>{product.complianceNote&&<div className="tp-compliance-note">{product.complianceNote}</div>}<div className="tp-service-tags"><span><Check/>企业配送</span><span><Check/>支持开票</span></div><em>{product.settlement}</em></div>
+        <div className="tp-purchase-box"><label>采购数量<div><input defaultValue="1"/><span>{product.unit}</span></div></label><label>交付城市<select defaultValue="上海"><option>上海</option><option>北京</option><option>广州</option></select></label><button className="tp-primary" onClick={()=>nav(`/procurement/${product.id}/quote`)}>提交询价</button><button className="tp-outline" onClick={()=>nav('/procurement/new')}>发布采购需求</button>{product.traceBatchCode&&<button className="tp-outline trace-entry" onClick={()=>nav(`/traceability?batch=${product.traceBatchCode}`)}><ScanLine/>查看溯源</button>}</div>
+        <footer>供应商：{product.supplier}<button onClick={()=>nav(product.supplier==='山东万泽丰海洋开发集团有限公司'?'/suppliers/wanzefeng-group':'/suppliers')}>查看企业 <ChevronRight/></button></footer>
       </div>
     </section>
     <section className="tp-detail-content">
