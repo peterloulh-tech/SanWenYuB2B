@@ -268,15 +268,15 @@ export default function SiliconAssistant({ onSearch }) {
 
   return <aside
     className={`silicon-assistant ${open ? 'open' : ''}`}
-    aria-label="硅小智语音搜索"
+    aria-label="鲑小智语音搜索"
     data-side={position.side}
     data-panel-placement={position.y !== null && position.y < 310 ? 'below' : 'above'}
     style={assistantStyle}
   >
     {open && <section className="silicon-assistant-panel" role="dialog" aria-labelledby="silicon-assistant-title">
       <header>
-        <div><strong id="silicon-assistant-title">硅小智</strong><span>语音搜索</span></div>
-        <button type="button" onClick={closeAssistant} aria-label="关闭硅小智"><X /></button>
+        <div><strong id="silicon-assistant-title">鲑小智</strong><span>语音搜索</span></div>
+        <button type="button" onClick={closeAssistant} aria-label="关闭鲑小智"><X /></button>
       </header>
       <div className={`silicon-assistant-status ${phase}`} aria-live="polite">
         <span>{phase === 'listening' ? <MicOff /> : phase === 'error' ? <RotateCcw /> : <Mic />}</span>
@@ -304,10 +304,10 @@ export default function SiliconAssistant({ onSearch }) {
       onDrag={handleNativeDrag}
       onDragEnd={handleNativeDragEnd}
       aria-expanded={open}
-      title="硅小智语音搜索"
+      title="鲑小智语音搜索"
     >
       <img src="/assets/assistant/guixiaozhi.png" alt="" />
-      <span><strong>硅小智</strong><small>语音搜索</small></span>
+      <span><strong>鲑小智</strong><small>语音搜索</small></span>
     </button>
   </aside>
 }

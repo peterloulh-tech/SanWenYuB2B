@@ -29,7 +29,7 @@ test('麦克风和识别错误提供可恢复提示', () => {
   assert.match(getVoiceSearchErrorMessage('unknown'), /重试|手动搜索/)
 })
 
-test('硅小智接入全部 PC 搜索页并支持拖拽贴边', async () => {
+test('鲑小智接入全部 PC 搜索页并支持拖拽贴边', async () => {
   const [assistant, assistantStyles, homePage, productsPage, suppliersPage, servicesPage, procurementPage, ordersPage, retailPage] = await Promise.all([
     readFile(new URL('../src/components/ai/SiliconAssistant.jsx', import.meta.url), 'utf8'),
     readFile(new URL('../src/styles/silicon-assistant.css', import.meta.url), 'utf8'),
