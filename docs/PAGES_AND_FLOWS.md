@@ -2,6 +2,7 @@
 
 ## 公网演示入口
 
+- 2026-10-18：日照产业第 5 张视觉方案已发布到 `source` 与 GitHub Pages `main`，公网入口为 `https://peterloulh-tech.github.io/SanWenYuB2B/rizhao-industry`；深链由 `404.html` 回退到 SPA 后正常渲染。
 - 当前状态（2026-10-05）：用户选择恢复免费托管和原网址，仓库已恢复公开，GitHub Pages 构建成功，原公网首页返回 HTTP 200，HTTPS 强制开启，`404.html` 回退文件可访问。以下公网路径说明已重新适用。本地路由及演示服务不变。
 
 - 固定地址：`https://peterloulh-tech.github.io/SanWenYuB2B/`，由 GitHub Pages 托管，不依赖本机开机或本地服务。
